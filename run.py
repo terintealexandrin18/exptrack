@@ -32,14 +32,6 @@ class Expense:
         return f"Expense: {self.name}, {self.category}, £{self.amount:.2f}"
 
 
-def expenses_tracker():
-    print(f"App is running")
-    # Get user imput for the expenses.
-    expense_store = get_user_expenses()
-    # Import the expenses in google sheet.
-    save_expenses_to_google_sheet(expense_store)
-    # View the expenses.
-    view_expenses()
 
 
 def get_user_expenses():
@@ -106,7 +98,7 @@ def save_expenses_to_google_sheet(expense_store):
 
     # Append the dictionary to the Google Sheet
     page1_worksheet.append_row([expense_dict["name"],
-    expense_dict["category"], expense_dict["amount"]])
+        expense_dict["category"], expense_dict["amount"]])
     print("Saved successfully.")
 
 
@@ -114,4 +106,14 @@ def view_expenses():
     print(f" 📋 View the expenses")
 
 
-expenses_tracker()
+def expenses_tracker_main():
+    # Get user imput for the expenses.
+    expense_store = get_user_expenses()
+    # Import the expenses in google sheet.
+    save_expenses_to_google_sheet(expense_store)
+    # View the expenses.
+    view_expenses()
+
+
+print("Welcome to Expense Tracker")
+expenses_tracker_main()
