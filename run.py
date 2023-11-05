@@ -18,17 +18,17 @@ data = page1.get_all_values()
 print(data)
 """
 
+class Expense:
+    def __init__(self, name, category, amount) -> None:
+        self.name = name
+        self.category = category
+        self.amount = amount
 
-def __init__(self, name, category, amount) -> None:
-    self.name = name
-    self.category = category
-    self.amount = amount
-
-def __repr__(self):
-    """
-    Convert the result to a string instead of printing the memory address 
-    """
-    return f"Expense: {self.name}, {self.category}, £{self.amount:.2f}"
+    def __repr__(self):
+        """
+        Convert the result to a string instead of printing the memory address 
+        """
+        return f"Expense: {self.name}, {self.category}, £{self.amount:.2f}"
 
 
 def expenses_tracker():
@@ -82,7 +82,7 @@ def get_user_expenses():
                 input(f"Enter on of the categoy number: {range_of_value}")) - 1
             if select_index_value in range(len(category_expense)):
                 choosen_category = category_expense[select_index_value]
-                new_expense = (name=name_of_expense, category=choosen_category, 
+                new_expense =  Expense(name=name_of_expense, category=choosen_category, 
                 amount=amount_of_expense)                
                 return new_expense
             else:
