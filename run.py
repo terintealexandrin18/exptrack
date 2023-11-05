@@ -18,6 +18,7 @@ data = page1.get_all_values()
 print(data)
 """
 
+
 class Expense:
     def __init__(self, name, category, amount) -> None:
         self.name = name
@@ -26,7 +27,7 @@ class Expense:
 
     def __repr__(self):
         """
-        Convert the result to a string instead of printing the memory address 
+        Convert the result to a string instead of printing the memory address
         """
         return f"Expense: {self.name}, {self.category}, £{self.amount:.2f}"
 
@@ -34,12 +35,9 @@ class Expense:
 def expenses_tracker():
     print(f"App is running")
     # Get user imput for the expenses.
-
     expense_store = get_user_expenses()
-
     # Import the expenses in google sheet.
     save_expenses_to_google_sheet(expense_store)
-
     # View the expenses.
     view_expenses()
 
@@ -62,7 +60,7 @@ def get_user_expenses():
             #  loop
             break
         except ValueError:
-            print("Invalid input. Please enter a valid number (e.g. 12.34, 5, 7.23).")
+            print("Invalid input. Please enter a valid number(e.g. 12.34, 5, 7.23).")
     
     category_expense = [
         "🏡  Housing",
@@ -82,8 +80,8 @@ def get_user_expenses():
                 input(f"Enter on of the categoy number: {range_of_value}")) - 1
             if select_index_value in range(len(category_expense)):
                 choosen_category = category_expense[select_index_value]
-                new_expense =  Expense(name=name_of_expense, category=choosen_category, 
-                amount=amount_of_expense)                
+                new_expense = Expense(name=name_of_expense, 
+                category=choosen_category, amount=amount_of_expense)              
                 return new_expense
             else:
                 print("Invalid category. Please try again.")
@@ -93,11 +91,22 @@ def get_user_expenses():
 
 def save_expenses_to_google_sheet(expense_store):
     """
-    Add the expense on google sheet.
+     Add the expense to a Google Sheet.
     """
     print(f" 📌 Saving user expenses {expense_store}")
+
+    # Convert the Expense object to a dictionary
+    expense_dict = {
+        "name": expense_store.name,
+        "category": expense_store.category,
+        "amount": expense_store.amount
+    }
+
     page1_worksheet = SHEET.worksheet("page1")
-    page1_worksheet.append_row(expense_store)
+
+    # Append the dictionary to the Google Sheet
+    page1_worksheet.append_row([expense_dict["name"],
+    expense_dict["category"], expense_dict["amount"]])
     print("Saved successfully.")
 
 
