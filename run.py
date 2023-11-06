@@ -36,6 +36,7 @@ def remove_commas(input_str):
     # Remove any commas from the input
     return input_str.replace(',', '')
 
+
 def get_user_expenses():
     """
     We use this function to collect data from the user, including the expense
@@ -101,12 +102,29 @@ def save_expenses_to_google_sheet(expense_store):
     page1_worksheet = SHEET.worksheet("page1")
 
     # Append the dictionary to the Google Sheet
-    page1_worksheet.append_row([expense_dict["name"], 
-    expense_dict["category"], expense_dict["amount"]])
+    page1_worksheet.append_row([expense_dict["name"],
+                                expense_dict["category"], expense_dict["amount"]])
     print("Saved successfully.")
 
 
-def get_expenses_by_category():
+def calculate_total_expenses_by_category():
+    print("Calculating total expenses by category:")
+    page1_worksheet = SHEET.worksheet("page1")
+    data = page1_worksheet.get_all_values()
+
+    # Create a dictionary to categorize and calculate expenses by category
+    categories_total = {}
+    for row in data[1:]:
+        name, category, amount = row
+        if category not in categories_total:
+            categories_total[category] = 0
+        categories_total[category] += float(amount)
+
+    # Print total expenses by category
+    for category, total_amount in categories_total.items():
+        print(f"{category}: £{total_amount:.2f}")
+
+def view_expenses_by_category():
     print("View expenses by category:")
     page1_worksheet = SHEET.worksheet("page1")
     data = page1_worksheet.get_all_values()
@@ -119,49 +137,42 @@ def get_expenses_by_category():
             categories[category] = []
         categories[category].append((name, float(amount)))
 
-    # Print expenses by category
-    for category, expenses in categories.items():
-        print(f"{category}:")
-        for name, amount in expenses:
-            print(f"  {name}: £{amount:.2f}")
+    # Display the list of categories with corresponding numbers
+    for index, category in enumerate(categories.keys(), start=1):
+        print(f"{index}: {category}")
 
-def calculate_total_expenses():
-    print("Calculating total expenses:")
-    page1_worksheet = SHEET.worksheet("page1")
-    data = page1_worksheet.get_all_values()
-    total_amount = sum(float(row[2]) for row in data[1:])
-    print(f"Total amount of expenses: £{total_amount:.2f}")
-
-
+    # Allow the user to choose a category to view expenses
+    while True:
+        category_choice = input("Enter the category number (0 to exit): ")
+        if category_choice == "0":
+            break
+        elif category_choice.isdigit():
+            category_choice = int(category_choice)
+            if 1 <= category_choice <= len(categories):
+                chosen_category = list(categories.keys())[category_choice - 1]
+                print(f"Expenses in the category '{chosen_category}':")
+                for name, amount in categories[chosen_category]:
+                    print(f"  {name}: £{amount:.2f}")
+            else:
+                print("Invalid category number. Please try again.")
+        else:
+            print("Invalid input. Please enter a number.")
 
 def expenses_tracker_main():
     print("Welcome to Expense Tracker")
     while True:
-        choice = input("Choose an option (1: Enter an expense, 2: View expenses by category, 3: Calculate total expenses, 4: Exit): ")
+        choice = input("Choose an option (1: Enter an expense, 2: View expenses by category, 3: Calculate total expenses by category, 4: Exit): ")
         if choice == "1":
             expense = get_user_expenses()
             save_expenses_to_google_sheet(expense)
         elif choice == "2":
-            get_expenses_by_category()
+            view_expenses_by_category()
         elif choice == "3":
-            calculate_total_expenses()
+            calculate_total_expenses_by_category()
         elif choice == "4":
             print("Goodbye!")
             break
         else:
             print("Invalid choice. Please try again.")
-
-
-"""
-def expenses_tracker_main():
-    # Get user imput for the expenses.
-    # expense_store = get_user_expenses()
-    # Import the expenses in google sheet.
-    # save_expenses_to_google_sheet(expense_store)
-    # View the expenses.
-    # view_expenses() - used before might need to delete
-    # get_expenses_from_sheet() - same above
-
-"""
 
 expenses_tracker_main()
