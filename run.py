@@ -90,7 +90,7 @@ def save_expenses_to_google_sheet(expense_store):
     """
      Add the expense to a Google Sheet.
     """
-    print(f" 📌 Saving user expenses {expense_store}")
+    print(f" 📌 Saving User {expense_store}")
 
     # Convert the Expense object to a dictionary
     expense_dict = {
@@ -104,7 +104,7 @@ def save_expenses_to_google_sheet(expense_store):
     # Append the dictionary to the Google Sheet
     page1_worksheet.append_row([expense_dict["name"],
                                 expense_dict["category"], expense_dict["amount"]])
-    print("Saved successfully.")
+    print("Saved successfully.🤗")
 
 
 def calculate_total_expenses_by_category():
@@ -158,10 +158,21 @@ def view_expenses_by_category():
         else:
             print("Invalid input. Please enter a number.")
 
+def total_amount_spent():
+    print("View total amount spend this month:")
+    page1_worksheet = SHEET.worksheet("page1")
+    data = page1_worksheet.get_all_values()
+    total_spent = 0
+    for row in data[2:]:
+        amount = float(row[2])
+        total_spent += amount
+    # Print total spent
+    print(f"Total amount spent this month: £{total_spent:.2f}")
+
 def expenses_tracker_main():
-    print("Welcome to Expense Tracker")
+    print("Welcome to Expense Tracker\n")
     while True:
-        choice = input("Choose an option (1: Enter an expense, 2: View expenses by category, 3: Calculate total expenses by category, 4: Exit): ")
+        choice = input("Choose an option:\n1: Enter an expense\n 2: View expenses by category\n  3: Calculate total expenses by category\n    4: Total amount spent this month\n     5: Exit")
         if choice == "1":
             expense = get_user_expenses()
             save_expenses_to_google_sheet(expense)
@@ -170,9 +181,12 @@ def expenses_tracker_main():
         elif choice == "3":
             calculate_total_expenses_by_category()
         elif choice == "4":
+            total_amount_spent()
+        elif choice == "5":
             print("Goodbye!")
             break
         else:
             print("Invalid choice. Please try again.")
+
 
 expenses_tracker_main()
