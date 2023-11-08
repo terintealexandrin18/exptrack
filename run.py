@@ -12,11 +12,9 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('Expense Tracker')
 
-"""
-page1 = SHEET.worksheet('page1')
-data = page1.get_all_values()
-print(data)
-"""
+# Initialize global variables
+monthly_budget = 0
+total_spent = 0
 
 
 class Expense:
@@ -108,6 +106,10 @@ def save_expenses_to_google_sheet(expense_store):
 
 
 def calculate_total_expenses_by_category():
+    """
+    Calculate the total expenses by category
+    Get the data from google sheet
+    """
     print("Calculating total expenses by category:")
     page1_worksheet = SHEET.worksheet("page1")
     data = page1_worksheet.get_all_values()
@@ -125,6 +127,12 @@ def calculate_total_expenses_by_category():
         print(f"{category}: £{total_amount:.2f}")
 
 def view_expenses_by_category():
+    """
+    View the total expenses by category
+    Get the date from google sheet. Use the while true
+    function to see all the expenses. Once done you can 
+    exit from the loop
+    """
     print("View expenses by category:")
     page1_worksheet = SHEET.worksheet("page1")
     data = page1_worksheet.get_all_values()
@@ -158,21 +166,51 @@ def view_expenses_by_category():
         else:
             print("Invalid input. Please enter a number.")
 
+
 def total_amount_spent():
-    print("View total amount spend this month:")
+    """
+    Function to see the total amount spent for all expenses and budget left
+    """
+    print("View total amount spent this month:")
     page1_worksheet = SHEET.worksheet("page1")
     data = page1_worksheet.get_all_values()
+    global total_spent
     total_spent = 0
     for row in data[2:]:
         amount = float(row[2])
         total_spent += amount
-    # Print total spent
-    print(f"Total amount spent this month: £{total_spent:.2f}")
+    else:
+        print(f"Total amount spent: £{total_spent:.2f}")
+
+
+def set_up_monthly_budget():
+    """ 
+    Function to set up a monthly budget by the user using input method
+    """
+    global monthly_budget
+    try:
+        monthly_budget = float(input("Enter your monthly budget: £"))
+        return monthly_budget
+    except ValueError:
+        print("Invalid input. Please enter a valid numeric value.")
+        return set_up_monthly_budget()
+
+
+def monthly_budget_left():
+    """
+    Calculate the monthly budget left
+    """
+    if monthly_budget == 0:
+        print("Please set up a monthly budget to view the budget left.")
+    else:
+        budget_left = monthly_budget - total_spent
+        print(f"Monthly budget left: £{budget_left:.2f}")
+
 
 def expenses_tracker_main():
     print("Welcome to Expense Tracker\n")
     while True:
-        choice = input("Choose an option:\n1: Enter an expense\n 2: View expenses by category\n  3: Calculate total expenses by category\n    4: Total amount spent this month\n     5: Exit")
+        choice = input("Choose an option:\n  1: Enter an expense\n  2: View expenses by category\n  3: Calculate total expenses by category\n  4: Total amount spent this month\n  5: Set up monthly budget\n  6: View the monthly budget left\n  7: Exit")
         if choice == "1":
             expense = get_user_expenses()
             save_expenses_to_google_sheet(expense)
@@ -183,6 +221,10 @@ def expenses_tracker_main():
         elif choice == "4":
             total_amount_spent()
         elif choice == "5":
+            set_up_monthly_budget()
+        elif choice == "6":
+            monthly_budget_left()
+        elif choice == "7":
             print("Goodbye!")
             break
         else:
