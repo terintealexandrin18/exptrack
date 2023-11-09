@@ -188,9 +188,20 @@ def monthly_budget_left():
     
 def expenses_tracker_main():
     calculate_total_spent()
-    print("Welcome to Expense Tracker\n")
+    print("\nWelcome to Expense Tracker")
+
     while True:
-        choice = input("Choose an option:\n  1: Enter an expense\n  2: View expenses by category\n  3: Calculate total expenses by category\n  4: Total amount spent this month\n  5: Set up monthly budget\n  6: View the monthly budget left\n  7: Exit")
+        print("\nChoose an option:")
+        print("  1: Enter an expense")
+        print("  2: View expenses by category")
+        print("  3: Calculate total expenses by category")
+        print("  4: Total amount spent this month")
+        print("  5: Set up monthly budget")
+        print("  6: View the monthly budget left")
+        print("  7: Exit")
+
+        choice = input("\nPlease select an option: ")
+
         if choice == "1":
             expense = get_user_expenses()
             save_expenses_to_google_sheet(expense)
@@ -205,10 +216,9 @@ def expenses_tracker_main():
         elif choice == "6":
             monthly_budget_left()
         elif choice == "7":
-            print("Goodbye!")
+            print("\nGoodbye!")
             break
         else:
-            print("Invalid choice. Please try again.")
-
+            print("\nInvalid choice. Please try again.")
 
 expenses_tracker_main()
