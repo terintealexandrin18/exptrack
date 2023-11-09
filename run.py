@@ -44,7 +44,8 @@ def get_user_expenses():
             amount_of_expense = float(amount_of_expense)
             break
         except ValueError:
-            print("Invalid input. Please enter a valid number (e.g. 1200.50, 5, 7.23).")
+            print("Invalid input. Please enter a valid number "
+                  "(e.g. 1200.50, 5, 7.23).")
 
     category_expense = [
         "🏡  Housing",
@@ -61,11 +62,13 @@ def get_user_expenses():
         range_of_value = f"[1 - {len(category_expense)}]"
         try:
             select_index_value = int(
-                input(f"Enter one of the category numbers: {range_of_value}")) - 1
+                input(f"Enter one of the category "
+                      f"numbers: {range_of_value}")) - 1
             if select_index_value in range(len(category_expense)):
                 chosen_category = category_expense[select_index_value]
                 new_expense = Expense(name=name_of_expense,
-                                      category=chosen_category, amount=amount_of_expense)
+                                      category=chosen_category,
+                                      amount=amount_of_expense)
                 return new_expense
             else:
                 print("Invalid category. Please try again.")
@@ -82,8 +85,10 @@ def save_expenses_to_google_sheet(expense_store):
     }
 
     page1_worksheet = SHEET.worksheet("page1")
-    page1_worksheet.append_row([expense_dict["name"],
-                                expense_dict["category"], expense_dict["amount"]])
+    page1_worksheet.append_row([
+        expense_dict["name"],
+        expense_dict["category"],
+        expense_dict["amount"]])
     print("Saved successfully.🤗")
 
 
@@ -94,7 +99,7 @@ def calculate_total_expenses_by_category():
 
     categories_total = {}
     for row in data[1:]:
-        name, category, amount = row
+        category, amount = row
         if category not in categories_total:
             categories_total[category] = 0
         categories_total[category] += float(amount)
@@ -183,21 +188,22 @@ def monthly_budget_left():
         days_in_the_month = calendar.monthrange(now.year, now.month)[1]
         remaining_days = days_in_the_month - now.day
         daily_budget = budget_left / remaining_days
-        print(f"Monthly budget left: £{budget_left:.2f}, Budget per day left: £{daily_budget:.2f}")
+        print(f"Monthly budget left: £{budget_left:.2f}, "
+              f" Budget per day left: £{daily_budget:.2f}")
 
-    
+
 def expenses_tracker_main():
     calculate_total_spent()
     print("\nWelcome to Expense Tracker")
 
     while True:
         print("\nChoose an option:")
-        print("  1: Enter an expense")
-        print("  2: View expenses by category")
-        print("  3: Calculate total expenses by category")
-        print("  4: Total amount spent this month")
-        print("  5: Set up monthly budget")
-        print("  6: View the monthly budget left")
+        print("  1: Add an Expense")
+        print("  2: View Expenses by Category")
+        print("  3: Calculate Total Expenses by Category")
+        print("  4: View Total Amount Spent This Month")
+        print("  5: Set Up Monthly Budget")
+        print("  6: View Monthly Budget Status")
         print("  7: Exit")
 
         choice = input("\nPlease select an option: ")
@@ -220,5 +226,6 @@ def expenses_tracker_main():
             break
         else:
             print("\nInvalid choice. Please try again.")
+
 
 expenses_tracker_main()
