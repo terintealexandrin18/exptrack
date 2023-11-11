@@ -18,15 +18,6 @@ SHEET = GSPREAD_CLIENT.open('Expense Tracker')
 monthly_budget = 0
 total_spent = 0
 
-# ANSI escape codes for text and background colors
-text_color = "\033[38;2;255;0;0m"  # Red text
-background_color = "\033[48;2;0;0;255m"  # Blue background
-reset_colors = "\033[0m"  # Reset to default colors
-
-# Text with custom colors
-custom_text = f"{background_color}{text_color}Custom Text{reset_colors}"
-
-print(custom_text)
 
 def red(text):
     return f"\033[91m{text}\033[0m"
