@@ -18,6 +18,18 @@ SHEET = GSPREAD_CLIENT.open('Expense Tracker')
 monthly_budget = 0
 total_spent = 0
 
+# ANSI escape codes for text and background colors
+text_color = "\033[38;2;255;0;0m"  # Red text
+background_color = "\033[48;2;0;0;255m"  # Blue background
+reset_colors = "\033[0m"  # Reset to default colors
+
+# Text with custom colors
+custom_text = f"{background_color}{text_color}Custom Text{reset_colors}"
+
+print(custom_text)
+
+def red(text):
+    return f"\033[91m{text}\033[0m"
 
 class Expense:
     def __init__(self, name, category, amount) -> None:
@@ -177,7 +189,7 @@ def total_amount_spent():
     for row in data[2:]:
         amount = float(row[2])
         total_spent += amount
-    else:
+    else: 
         print(f"Total amount spent: £{total_spent:.2f}")
 
 
@@ -231,7 +243,11 @@ def monthly_budget_left():
 def expenses_tracker_main():
     try:
         calculate_total_spent()
-        print("\nWelcome to Expense Tracker")
+        print(red("\nWelcome to Expense Tracker"))
+        print("With Expense Tracker, you can easily manage and monitor your spending.")
+        print("You can add your daily expenses, view expenses by category, calculate totals,")
+        print("set up a monthly budget, and track your budget status.")
+        print("Let's start tracking your expenses!\n")
 
         while True:
             print("\nChoose an option:")
