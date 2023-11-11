@@ -237,7 +237,7 @@ def set_up_monthly_budget():
 
 
 def calculate_total_spent():
-     """
+    """
     Calculate and return the total amount spent this month.
     """
     global total_spent
@@ -268,7 +268,7 @@ def monthly_budget_left():
 
 
 def expenses_tracker_main():
-     """
+    """
     Main function to run the Expense Tracker application.
     """
     try:
