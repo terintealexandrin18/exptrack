@@ -186,9 +186,17 @@ def set_up_monthly_budget():
     try:
         monthly_budget = float(input("Enter your monthly budget: £"))
 
+        if monthly_budget < 0:
+            print("Monthly budget cannot be negative. Please enter a valid budget.")
+            return set_up_monthly_budget()
+
         # Calculate total spent when setting up the monthly budget
         total_spent = calculate_total_spent()
 
+        if monthly_budget < total_spent:
+            savings_covered = total_spent - monthly_budget
+            print(f"Warning: Your budget of £{monthly_budget:.2f} is smaller than your total spent of £{total_spent:.2f}.")
+            print(f"You've taken £{savings_covered:.2f} from your savings to cover the deficit.")
         return monthly_budget
     except ValueError:
         print("Invalid input. Please enter a valid numeric value.")
