@@ -20,10 +20,17 @@ total_spent = 0
 
 
 def red(text):
+    """
+    Function transform the text to color red
+    """
     return f"\033[91m{text}\033[0m"
 
 class Expense:
     def __init__(self, name, category, amount) -> None:
+        """
+        Create an Expense object with a name, category, and amount.
+        """
+
         self.name = name
         self.category = category
         self.amount = amount
@@ -33,17 +40,24 @@ class Expense:
 
 
 def remove_commas(input_str):
+    """
+    Remove commas from the input string.
+    Will return the input string with commas removed.
+    """
     return input_str.replace(',', '')
 
 
 def is_valid_input(input_str):
     """
-    Function to allow to the user to insert only letters and splace
+    Check if the input string contains only letters and spaces.
     """
     return input_str.strip() and all(c.isalpha() or c.isspace() for c in input_str)
 
 
 def get_user_expenses():
+    """
+    Get user input for expense details (name, category, amount) and return an Expense object.
+    """
     print("🖍 Getting user expenses")
 
     while True:
@@ -93,6 +107,9 @@ def get_user_expenses():
 
 
 def save_expenses_to_google_sheet(expense_store):
+    """
+    Save an expense to the Google Sheets document.
+    """
     try:
         expense_dict = {
             "name": expense_store.name,
@@ -111,6 +128,9 @@ def save_expenses_to_google_sheet(expense_store):
 
 
 def calculate_total_expenses_by_category():
+    """
+    Calculate and display total expenses by category.
+    """
     try:
         print("Calculating total expenses by category:")
         page1_worksheet = SHEET.worksheet("page1")
@@ -140,6 +160,10 @@ def calculate_total_expenses_by_category():
 
 
 def view_expenses_by_category():
+    """
+    View expenses by category and allow the user to select a category to display 
+    expenses within that category.
+    """
     print("View expenses by category:")
     page1_worksheet = SHEET.worksheet("page1")
     data = page1_worksheet.get_all_values()
@@ -172,6 +196,9 @@ def view_expenses_by_category():
 
 
 def total_amount_spent():
+    """
+    Calculate and display the total amount spent this month.
+    """
     print("\nView total amount spent this month:")
     page1_worksheet = SHEET.worksheet("page1")
     data = page1_worksheet.get_all_values()
@@ -185,6 +212,9 @@ def total_amount_spent():
 
 
 def set_up_monthly_budget():
+    """
+    Set up the user's monthly budget, calculate total spent, and provide budget status.
+    """
     global monthly_budget, total_spent
     try:
         monthly_budget = float(input("Enter your monthly budget: £"))
@@ -207,6 +237,9 @@ def set_up_monthly_budget():
 
 
 def calculate_total_spent():
+     """
+    Calculate and return the total amount spent this month.
+    """
     global total_spent
     page1_worksheet = SHEET.worksheet("page1")
     data = page1_worksheet.get_all_values()
@@ -218,6 +251,9 @@ def calculate_total_spent():
 
 
 def monthly_budget_left():
+    """
+    Calculate and display the monthly budget left and daily budget.
+    """
     if monthly_budget == 0:
         print("Please set up a monthly budget to view the budget left.")
     else:
@@ -232,6 +268,9 @@ def monthly_budget_left():
 
 
 def expenses_tracker_main():
+     """
+    Main function to run the Expense Tracker application.
+    """
     try:
         calculate_total_spent()
         print(red("\nWelcome to Expense Tracker"))
