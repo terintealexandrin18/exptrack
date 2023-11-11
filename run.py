@@ -25,6 +25,7 @@ def red(text):
     """
     return f"\033[91m{text}\033[0m"
 
+
 class Expense:
     def __init__(self, name, category, amount) -> None:
         """
@@ -51,12 +52,15 @@ def is_valid_input(input_str):
     """
     Check if the input string contains only letters and spaces.
     """
-    return input_str.strip() and all(c.isalpha() or c.isspace() for c in input_str)
+    return input_str.strip() and all(
+        c.isalpha() or c.isspace() for c in input_str
+    )
 
 
 def get_user_expenses():
     """
-    Get user input for expense details (name, category, amount) and return an Expense object.
+    Get user input for expense details (name, category, amount) and
+    return an Expense object.
     """
     print("🖍 Getting user expenses")
 
@@ -65,7 +69,8 @@ def get_user_expenses():
         if is_valid_input(name_of_expense):
             break
         else:
-            print("Invalid input. Please enter a valid expense name (only letters and spaces allowed).")
+            print("Invalid input. Please enter a valid expense name"
+                  "(only letters and spaces allowed).")
 
     while True:
         amount_of_expense = input("Enter the expense amount: ")
@@ -75,7 +80,8 @@ def get_user_expenses():
             amount_of_expense = float(amount_of_expense)
             break
         except ValueError:
-            print("Invalid input. Please enter a valid number (e.g. 1200.50, 5, 7.23).")
+            print("Invalid input. Please enter a valid number "
+                  "(e.g. 1200.50, 5, 7.23).")
 
     category_expense = [
         "🏡  Housing",
@@ -141,14 +147,17 @@ def calculate_total_expenses_by_category():
             return
 
         categories_total = {}
-        for row in data[1:]:  # Start iterating from the second row (index 1) to include row 2
+        # Start iterating from the second row (index 1) to include row 2
+        for row in data[1:]:
             if len(row) >= 3:
-                category, amount = row[1], row[2]  # Adjust column indices as needed
+                category, amount = row[1], row[2]
+                # Adjust column indices as needed
                 if category not in categories_total:
                     categories_total[category] = 0
                 categories_total[category] += float(amount)
             else:
-                print(f"Skipping row: {row} - Expected 3 values in each row, found {len(row)}")
+                print(f"Skipping row: {row} - Expected 3 values in "
+                      f"each row, found {len(row)}")
 
         if not categories_total:
             print("No valid expenses found in categories.")
@@ -156,14 +165,14 @@ def calculate_total_expenses_by_category():
             for category, total_amount in categories_total.items():
                 print(f"{category}: £{total_amount:.2f}")
     except Exception as e:
-        print(f"An error occurred while calculating expenses by category: {str(e)}")
-
+        print(f"An error occurred while calculating expenses "
+              f"by category: {str(e)}")
 
 
 def view_expenses_by_category():
     """
-    View expenses by category and allow the user to select a category to display 
-    expenses within that category.
+    View expenses by category and allow the user to select a category
+    to display expenses within that category.
     """
     print("View expenses by category:")
     page1_worksheet = SHEET.worksheet("page1")
@@ -205,23 +214,26 @@ def total_amount_spent():
     data = page1_worksheet.get_all_values()
     global total_spent
     total_spent = 0
-    for row in data[1:]:  # Start iterating from the second row (index 1) to include row 2
+    # Start iterating from the second row (index 1) to include row 2
+    for row in data[1:]:
         amount = float(row[2])
         total_spent += amount
-    else: 
+    else:
         print(f"Total amount spent: £{total_spent:.2f}")
 
 
 def set_up_monthly_budget():
     """
-    Set up the user's monthly budget, calculate total spent, and provide budget status.
+    Set up the user's monthly budget, calculate total spent,
+    and provide budget status.
     """
     global monthly_budget, total_spent
     try:
         monthly_budget = float(input("Enter your monthly budget: £"))
 
         if monthly_budget < 0:
-            print("Monthly budget cannot be negative. Please enter a valid budget.")
+            print(f"Monthly budget cannot be negative. Please enter "
+                  f"a valid budget.")
             return set_up_monthly_budget()
 
         # Calculate total spent when setting up the monthly budget
@@ -229,8 +241,10 @@ def set_up_monthly_budget():
 
         if monthly_budget < total_spent:
             savings_covered = total_spent - monthly_budget
-            print(f"Warning: Your budget of £{monthly_budget:.2f} is smaller than your total spent of £{total_spent:.2f}.")
-            print(f"You've taken £{savings_covered:.2f} from your savings to cover the deficit.")
+            print(f"Warning: Your budget of £{monthly_budget:.2f} is smaller "
+                  f"than your total spent of £{total_spent:.2f}.")
+            print(f"You've taken £{savings_covered:.2f} from your savings to "
+                  f"cover the deficit.")
         return monthly_budget
     except ValueError:
         print("Invalid input. Please enter a valid numeric value.")
@@ -276,14 +290,15 @@ def clear_expenses_data():
         page1_worksheet = SHEET.worksheet("page1")
         num_rows = len(page1_worksheet.get_all_values())
         if num_rows > 1:
-            for _ in range(num_rows - 1):  # Delete rows starting from row 2 (excluding row 1) to the last row with data
+            for _ in range(num_rows - 1):
+                # Delete rows starting from row 2 (excluding row 1) to the
+                # last row with data
                 page1_worksheet.delete_rows(2)
             print(f"Deleted {num_rows - 1} rows (excluding the first row).")
         else:
             print("No expenses data (excluding the first row) to clear.")
     except Exception as e:
         print(f"An error occurred while clearing expenses data: {str(e)}")
-
 
 
 def expenses_tracker_main():
@@ -294,8 +309,10 @@ def expenses_tracker_main():
         clear_expenses_data()
         calculate_total_spent()
         print(red("\nWelcome to Expense Tracker"))
-        print("With Expense Tracker, you can easily manage and monitor your spending.")
-        print("You can add your daily expenses, view expenses by category, calculate totals,")
+        print(f"With Expense Tracker, you can easily manage and monitor "
+              f"your spending.")
+        print(f"You can add your daily expenses, view expenses by category, "
+              f"calculate totals,")
         print("set up a monthly budget, and track your budget status.")
         print("Let's start tracking your expenses!\n")
 
@@ -331,5 +348,6 @@ def expenses_tracker_main():
                 print("\nInvalid choice. Please try again.")
     except Exception as e:
         print(f"An error occurred: {str(e)}")
+
 
 expenses_tracker_main()
