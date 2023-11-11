@@ -35,30 +35,30 @@ def remove_commas(input_str):
 
 def is_valid_input(input_str):
     """
-    Function that allow to the user not to imput an empty expense
+    Function to allow to the user to insert only letters and splace
     """
-    return input_str.strip()
+    return input_str.strip() and all(c.isalpha() or c.isspace() for c in input_str)
+
 
 def get_user_expenses():
-    print(f" 🖍 Getting user expenses")
+    print("🖍 Getting user expenses")
+
     while True:
-        name_of_expense = input("Enter your expense: ")
+        name_of_expense = input("Enter your expense name: ")
         if is_valid_input(name_of_expense):
             break
         else:
-            print("Invalid input. Please enter a valid expense name.")
+            print("Invalid input. Please enter a valid expense name (only letters and spaces allowed).")
 
     while True:
         amount_of_expense = input("Enter the expense amount: ")
         amount_of_expense = remove_commas(amount_of_expense)
 
-
         try:
             amount_of_expense = float(amount_of_expense)
             break
         except ValueError:
-            print("Invalid input. Please enter a valid number "
-                  "(e.g. 1200.50, 5, 7.23).")
+            print("Invalid input. Please enter a valid number (e.g. 1200.50, 5, 7.23).")
 
     category_expense = [
         "🏡  Housing",
@@ -90,35 +90,50 @@ def get_user_expenses():
 
 
 def save_expenses_to_google_sheet(expense_store):
-    print(f" 📌 Saving User {expense_store}")
-    expense_dict = {
-        "name": expense_store.name,
-        "category": expense_store.category,
-        "amount": expense_store.amount
-    }
+    try:
+        expense_dict = {
+            "name": expense_store.name,
+            "category": expense_store.category,
+            "amount": expense_store.amount
+        }
 
-    page1_worksheet = SHEET.worksheet("page1")
-    page1_worksheet.append_row([
-        expense_dict["name"],
-        expense_dict["category"],
-        expense_dict["amount"]])
-    print("Saved successfully.🤗")
+        page1_worksheet = SHEET.worksheet("page1")
+        page1_worksheet.append_row([
+            expense_dict["name"],
+            expense_dict["category"],
+            expense_dict["amount"]])
+        print("Saved successfully.🤗")
+    except Exception as e:
+        print(f"An error occurred while saving: {str(e)}")
 
 
 def calculate_total_expenses_by_category():
-    print("Calculating total expenses by category:")
-    page1_worksheet = SHEET.worksheet("page1")
-    data = page1_worksheet.get_all_values()
+    try:
+        print("Calculating total expenses by category:")
+        page1_worksheet = SHEET.worksheet("page1")
+        data = page1_worksheet.get_all_values()
 
-    categories_total = {}
-    for row in data[1:]:
-        category, amount = row
-        if category not in categories_total:
-            categories_total[category] = 0
-        categories_total[category] += float(amount)
+        if len(data) < 2:
+            print("No expenses found.")
+            return
 
-    for category, total_amount in categories_total.items():
-        print(f"{category}: £{total_amount:.2f}")
+        categories_total = {}
+        for row in data[1:]:
+            if len(row) >= 3:
+                category, amount = row[1], row[2]  # Adjust column indices as needed
+                if category not in categories_total:
+                    categories_total[category] = 0
+                categories_total[category] += float(amount)
+            else:
+                print(f"Skipping row: {row} - Expected 3 values in each row, found {len(row)}")
+
+        if not categories_total:
+            print("No valid expenses found in categories.")
+        else:
+            for category, total_amount in categories_total.items():
+                print(f"{category}: £{total_amount:.2f}")
+    except Exception as e:
+        print(f"An error occurred while calculating expenses by category: {str(e)}")
 
 
 def view_expenses_by_category():
@@ -154,7 +169,7 @@ def view_expenses_by_category():
 
 
 def total_amount_spent():
-    print("View total amount spent this month:")
+    print("\nView total amount spent this month:")
     page1_worksheet = SHEET.worksheet("page1")
     data = page1_worksheet.get_all_values()
     global total_spent
@@ -206,39 +221,41 @@ def monthly_budget_left():
 
 
 def expenses_tracker_main():
-    calculate_total_spent()
-    print("\nWelcome to Expense Tracker")
+    try:
+        calculate_total_spent()
+        print("\nWelcome to Expense Tracker")
 
-    while True:
-        print("\nChoose an option:")
-        print("  1: Add an Expense")
-        print("  2: View Expenses by Category")
-        print("  3: Calculate Total Expenses by Category")
-        print("  4: View Total Amount Spent This Month")
-        print("  5: Set Up Monthly Budget")
-        print("  6: View Monthly Budget Status")
-        print("  7: Exit")
+        while True:
+            print("\nChoose an option:")
+            print("  1: Add an Expense")
+            print("  2: View Expenses by Category")
+            print("  3: Calculate Total Expenses by Category")
+            print("  4: View Total Amount Spent This Month")
+            print("  5: Set Up Monthly Budget")
+            print("  6: View Monthly Budget Status")
+            print("  7: Exit")
 
-        choice = input("\nPlease select an option: ")
+            choice = input("\nPlease select an option: ")
 
-        if choice == "1":
-            expense = get_user_expenses()
-            save_expenses_to_google_sheet(expense)
-        elif choice == "2":
-            view_expenses_by_category()
-        elif choice == "3":
-            calculate_total_expenses_by_category()
-        elif choice == "4":
-            total_amount_spent()
-        elif choice == "5":
-            set_up_monthly_budget()
-        elif choice == "6":
-            monthly_budget_left()
-        elif choice == "7":
-            print("\nGoodbye!")
-            break
-        else:
-            print("\nInvalid choice. Please try again.")
-
+            if choice == "1":
+                expense = get_user_expenses()
+                save_expenses_to_google_sheet(expense)
+            elif choice == "2":
+                view_expenses_by_category()
+            elif choice == "3":
+                calculate_total_expenses_by_category()
+            elif choice == "4":
+                total_amount_spent()
+            elif choice == "5":
+                set_up_monthly_budget()
+            elif choice == "6":
+                monthly_budget_left()
+            elif choice == "7":
+                print("\nGoodbye!")
+                break
+            else:
+                print("\nInvalid choice. Please try again.")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
 
 expenses_tracker_main()
