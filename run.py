@@ -33,12 +33,25 @@ def remove_commas(input_str):
     return input_str.replace(',', '')
 
 
+def is_valid_input(input_str):
+    """
+    Function that allow to the user not to imput an empty expense
+    """
+    return input_str.strip()
+
 def get_user_expenses():
     print(f" 🖍 Getting user expenses")
-    name_of_expense = input("Enter your expense: ")
+    while True:
+        name_of_expense = input("Enter your expense: ")
+        if is_valid_input(name_of_expense):
+            break
+        else:
+            print("Invalid input. Please enter a valid expense name.")
+
     while True:
         amount_of_expense = input("Enter the expense amount: ")
         amount_of_expense = remove_commas(amount_of_expense)
+
 
         try:
             amount_of_expense = float(amount_of_expense)
