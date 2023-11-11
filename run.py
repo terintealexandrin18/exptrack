@@ -141,7 +141,7 @@ def calculate_total_expenses_by_category():
             return
 
         categories_total = {}
-        for row in data[1:]:
+        for row in data[1:]:  # Start iterating from the second row (index 1) to include row 2
             if len(row) >= 3:
                 category, amount = row[1], row[2]  # Adjust column indices as needed
                 if category not in categories_total:
@@ -157,6 +157,7 @@ def calculate_total_expenses_by_category():
                 print(f"{category}: £{total_amount:.2f}")
     except Exception as e:
         print(f"An error occurred while calculating expenses by category: {str(e)}")
+
 
 
 def view_expenses_by_category():
@@ -204,7 +205,7 @@ def total_amount_spent():
     data = page1_worksheet.get_all_values()
     global total_spent
     total_spent = 0
-    for row in data[2:]:
+    for row in data[1:]:  # Start iterating from the second row (index 1) to include row 2
         amount = float(row[2])
         total_spent += amount
     else: 
@@ -267,11 +268,30 @@ def monthly_budget_left():
               f" Budget per day left: £{daily_budget:.2f}")
 
 
+def clear_expenses_data():
+    """
+    Clear all expenses data in the Google Sheet, excluding the first row.
+    """
+    try:
+        page1_worksheet = SHEET.worksheet("page1")
+        num_rows = len(page1_worksheet.get_all_values())
+        if num_rows > 1:
+            for _ in range(num_rows - 1):  # Delete rows starting from row 2 (excluding row 1) to the last row with data
+                page1_worksheet.delete_rows(2)
+            print(f"Deleted {num_rows - 1} rows (excluding the first row).")
+        else:
+            print("No expenses data (excluding the first row) to clear.")
+    except Exception as e:
+        print(f"An error occurred while clearing expenses data: {str(e)}")
+
+
+
 def expenses_tracker_main():
     """
     Main function to run the Expense Tracker application.
     """
     try:
+        clear_expenses_data()
         calculate_total_spent()
         print(red("\nWelcome to Expense Tracker"))
         print("With Expense Tracker, you can easily manage and monitor your spending.")
