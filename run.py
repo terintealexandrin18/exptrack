@@ -18,6 +18,17 @@ SHEET = GSPREAD_CLIENT.open('Expense Tracker')
 monthly_budget = 0
 total_spent = 0
 
+# ANSI escape code for blue text
+BLUE = "\033[94m"
+RESET = "\033[0m"
+
+
+def blue(text):
+    """
+    Function to transform the text to color blue.
+    """
+    return f"{BLUE}{text}{RESET}"
+
 
 def red(text):
     """
@@ -62,26 +73,26 @@ def get_user_expenses():
     Get user input for expense details (name, category, amount) and
     return an Expense object.
     """
-    print("🖍 Getting user expenses")
+    print(blue("🖍 Getting user expenses"))
 
     while True:
-        name_of_expense = input("Enter your expense name: ")
+        name_of_expense = input(blue("Enter your expense name: "))
         if is_valid_input(name_of_expense):
             break
         else:
-            print("Invalid input. Please enter a valid expense name"
-                  "(only letters and spaces allowed).")
+            print(blue("Invalid input. Please enter a valid expense name "
+                  "(only letters and spaces allowed)."))
 
     while True:
-        amount_of_expense = input("Enter the expense amount: ")
+        amount_of_expense = input(blue("Enter the expense amount: "))
         amount_of_expense = remove_commas(amount_of_expense)
 
         try:
             amount_of_expense = float(amount_of_expense)
             break
         except ValueError:
-            print("Invalid input. Please enter a valid number "
-                  "(e.g. 1200.50, 5, 7.23).")
+            print(blue("Invalid input. Please enter a valid number "
+                  "(e.g. 1200.50, 5, 7.23)."))
 
     category_expense = [
         "🏡  Housing",
@@ -163,7 +174,9 @@ def calculate_total_expenses_by_category():
             print("No valid expenses found in categories.")
         else:
             for category, total_amount in categories_total.items():
-                print(f"{category}: £{total_amount:.2f}")
+                # total_amount is a folot it cannot be colored using
+                # the blue function directly.
+                print(f"{category}: \033[94m£{total_amount:.2f}\033[0m")
     except Exception as e:
         print(f"An error occurred while calculating expenses "
               f"by category: {str(e)}")
@@ -198,7 +211,7 @@ def view_expenses_by_category():
                 chosen_category = list(categories.keys())[category_choice - 1]
                 print(f"Expenses in the category '{chosen_category}':")
                 for name, amount in categories[chosen_category]:
-                    print(f"  {name}: £{amount:.2f}")
+                    print(blue(f"  {name}: £{amount:.2f}"))
             else:
                 print("Invalid category number. Please try again.")
         else:
@@ -219,7 +232,8 @@ def total_amount_spent():
         amount = float(row[2])
         total_spent += amount
     else:
-        print(f"Total amount spent: £{total_spent:.2f}")
+        #total_spent is a folot it cannot be colored using the blue function directly.
+        print(f"Total amount spent: \033[94m£{total_spent:.2f}\033[0m")
 
 
 def set_up_monthly_budget():
@@ -228,18 +242,18 @@ def set_up_monthly_budget():
     """
     global monthly_budget, total_spent
     try:
-        monthly_budget = float(input("Enter your monthly budget: £"))
+        monthly_budget = float(input(blue("Enter your monthly budget: ") + "£"))
 
         if monthly_budget < 0:
-            print(f"Monthly budget cannot be negative. "
-                  f"Please enter a valid budget.")
+            print(blue("Monthly budget cannot be negative. "
+                  "Please enter a valid budget."))
             return set_up_monthly_budget()
 
         # Calculate total spent when setting up the monthly budget
         total_spent = calculate_total_spent()
         return monthly_budget
     except ValueError:
-        print("Invalid input. Please enter a valid numeric value.")
+        print(blue("Invalid input. Please enter a valid numeric value."))
         return set_up_monthly_budget()
 
 
@@ -273,13 +287,11 @@ def monthly_budget_left():
 
         if budget_left < 0:
             savings_covered = total_spent - monthly_budget
-            print(f"Warning: Your budget of £{monthly_budget:.2f} is "
-                  f"smaller than your total spent of £{total_spent:.2f}.")
-            print(f"You've taken £{savings_covered:.2f} from your savings "
-                  f"to cover the deficit.")
+            print(red(f"⚠ Warning ⚠ : Your budget of ") + f"\033[94m£{monthly_budget:.2f}\033[0m" + red(" is smaller than your total spent of ") + f"\033[94m£{total_spent:.2f}\033[0m" + red("."))
+            print(red("You've taken ") + f"\033[94m£{savings_covered:.2f}\033[0m" + red(" from your savings to cover the deficit."))
         else:
-            print(f"Monthly budget left: £{budget_left:.2f}, Budget per "
-                  f"day left: £{daily_budget:.2f}")
+            print(f"Monthly budget left: \033[94m£{budget_left:.2f}\033[0m, Budget per "
+                  f"day left: \033[94m£{daily_budget:.2f}\033[0m")
 
 
 def clear_expenses_data():
@@ -306,7 +318,7 @@ def expenses_tracker_main():
     Main function to run the Expense Tracker application.
     """
     try:
-        clear_expenses_data()
+        # clear_expenses_data()
         calculate_total_spent()
         print(red("\nWelcome to Expense Tracker"))
         print(f"With Expense Tracker, you can easily manage and monitor "
@@ -326,7 +338,7 @@ def expenses_tracker_main():
             print("  6: View Monthly Budget Status")
             print("  7: Exit")
 
-            choice = input("\nPlease select an option: ")
+            choice = input(blue("\nPlease select an option: "))
 
             if choice == "1":
                 expense = get_user_expenses()
@@ -342,12 +354,13 @@ def expenses_tracker_main():
             elif choice == "6":
                 monthly_budget_left()
             elif choice == "7":
-                print("\nGoodbye!")
+                print(blue("\nGoodbye!"))
                 break
             else:
-                print("\nInvalid choice. Please try again.")
+                print(blue("\nInvalid choice. Please try again."))
     except Exception as e:
-        print(f"An error occurred: {str(e)}")
+        print(red(f"An error occurred: {str(e)}"))
 
 
 expenses_tracker_main()
+
