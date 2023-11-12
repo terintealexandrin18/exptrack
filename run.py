@@ -224,27 +224,19 @@ def total_amount_spent():
 
 def set_up_monthly_budget():
     """
-    Set up the user's monthly budget, calculate total spent,
-    and provide budget status.
+    Set up the user's monthly budget and calculate total spent.
     """
     global monthly_budget, total_spent
     try:
         monthly_budget = float(input("Enter your monthly budget: £"))
 
         if monthly_budget < 0:
-            print(f"Monthly budget cannot be negative. Please enter "
-                  f"a valid budget.")
+            print(f"Monthly budget cannot be negative. "
+                  f"Please enter a valid budget.")
             return set_up_monthly_budget()
 
         # Calculate total spent when setting up the monthly budget
         total_spent = calculate_total_spent()
-
-        if monthly_budget < total_spent:
-            savings_covered = total_spent - monthly_budget
-            print(f"Warning: Your budget of £{monthly_budget:.2f} is smaller "
-                  f"than your total spent of £{total_spent:.2f}.")
-            print(f"You've taken £{savings_covered:.2f} from your savings to "
-                  f"cover the deficit.")
         return monthly_budget
     except ValueError:
         print("Invalid input. Please enter a valid numeric value.")
@@ -278,8 +270,16 @@ def monthly_budget_left():
         days_in_the_month = calendar.monthrange(now.year, now.month)[1]
         remaining_days = days_in_the_month - now.day
         daily_budget = budget_left / remaining_days
-        print(f"Monthly budget left: £{budget_left:.2f}, "
-              f" Budget per day left: £{daily_budget:.2f}")
+
+        if budget_left < 0:
+            savings_covered = total_spent - monthly_budget
+            print(f"Warning: Your budget of £{monthly_budget:.2f} is "
+                  f"smaller than your total spent of £{total_spent:.2f}.")
+            print(f"You've taken £{savings_covered:.2f} from your savings "
+                  f"to cover the deficit.")
+        else:
+            print(f"Monthly budget left: £{budget_left:.2f}, Budget per "
+                  f"day left: £{daily_budget:.2f}")
 
 
 def clear_expenses_data():
