@@ -82,7 +82,7 @@ def get_user_expenses():
     Get user input for expense details (name, category, amount) and
     return an Expense object.
     """
-    
+
     while True:
         name_of_expense = input(blue("Enter your expense name: "))
         if is_valid_input(name_of_expense):
@@ -240,7 +240,6 @@ def total_amount_spent():
         amount = float(row[2])
         total_spent += amount
     else:
-        # total_spent is a folot it cannot be colored using the blue function directly.
         print(f"Total amount spent: \033[94m£{total_spent:.2f}\033[0m")
 
 
@@ -250,7 +249,7 @@ def set_up_monthly_budget():
     """
     global monthly_budget, total_spent
     try:
-        monthly_budget = float(input(blue("Enter your monthly budget: ") + "£"))
+        monthly_budget = float(input(blue("Enter the monthly budget: ") + "£"))
 
         if monthly_budget < 0:
             print(green("Monthly budget cannot be negative. "
@@ -295,11 +294,15 @@ def monthly_budget_left():
 
         if budget_left < 0:
             savings_covered = total_spent - monthly_budget
-            print(red(f"⚠ Warning ⚠ : Your budget of ") + f"\033[94m£{monthly_budget:.2f}\033[0m" + red(" is smaller than your total spent of ") + f"\033[94m£{total_spent:.2f}\033[0m" + red("."))
-            print(red("You've taken ") + f"\033[94m£{savings_covered:.2f}\033[0m" + red(" from your savings to cover the deficit."))
+            print(red(f"⚠ Warning ⚠ : Your budget of ") +
+                  f"\033[94m£{monthly_budget:.2f}\033[0m" +
+                  f"red(' is smaller than your total spent of ')" +
+                  f"\033[94m£{total_spent:.2f}\033[0m" + red("."))
+            print(red("You've taken ") + f"\033[94m£{savings_covered:.2f}"
+                  f"\033[0m" + red(" from your savings to cover the deficit."))
         else:
-            print(f"Monthly budget left: \033[94m£{budget_left:.2f}\033[0m, Budget per "
-                  f"day left: \033[94m£{daily_budget:.2f}\033[0m")
+            print(f"Monthly budget left: \033[94m£{budget_left:.2f}\033[0m,"
+                  f"Budget per day left: \033[94m£{daily_budget:.2f}\033[0m")
 
 
 def clear_expenses_data():
@@ -315,7 +318,8 @@ def clear_expenses_data():
                 # last row with data
                 page1_worksheet.delete_rows(2)
     except Exception as e:
-        print(green(f"An error occurred while clearing expenses data: {str(e)}"))
+        print(green(f"An error occurred while clearing "
+                    f"expenses data: {str(e)}"))
 
 
 def expenses_tracker_main():
@@ -327,9 +331,9 @@ def expenses_tracker_main():
         calculate_total_spent()
         print(red("Welcome to Expense Tracker"))
         print(red(f"With Expense Tracker, you can easily manage and monitor "
-              f"your spending."))
-        print(red(f"You can add your daily expenses, view expenses by category, "
-              f"calculate totals,"))
+                  f"your spending."))
+        print(red(f"You can add your daily expenses, view expenses by "
+                  f"category, calculate totals,"))
         print(red("set up a monthly budget, and track your budget status."))
         print(red("Let's start tracking your expenses!\n"))
 
@@ -362,10 +366,9 @@ def expenses_tracker_main():
                 print(blue("\nGoodbye!"))
                 break
             else:
-                print(blue("\nInvalid choice. Please try again."))
+                print(green("\nInvalid choice. Please try again."))
     except Exception as e:
-        print(red(f"An error occurred: {str(e)}"))
+        print(green(f"An error occurred: {str(e)}"))
 
 
 expenses_tracker_main()
-
