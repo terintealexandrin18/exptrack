@@ -20,6 +20,8 @@ total_spent = 0
 
 # ANSI escape code for blue text
 BLUE = "\033[94m"
+RED = "\033[91m"
+GREEN = "\033[92m"
 RESET = "\033[0m"
 
 
@@ -35,6 +37,13 @@ def red(text):
     Function transform the text to color red
     """
     return f"\033[91m{text}\033[0m"
+
+
+def green(text):
+    """
+    Function to transform the text to color green.
+    """
+    return f"{GREEN}{text}{RESET}"
 
 
 class Expense:
@@ -73,14 +82,13 @@ def get_user_expenses():
     Get user input for expense details (name, category, amount) and
     return an Expense object.
     """
-    print(blue("🖍 Getting user expenses"))
-
+    
     while True:
         name_of_expense = input(blue("Enter your expense name: "))
         if is_valid_input(name_of_expense):
             break
         else:
-            print(blue("Invalid input. Please enter a valid expense name "
+            print(green("Invalid input. Please enter a valid expense name "
                   "(only letters and spaces allowed)."))
 
     while True:
@@ -91,7 +99,7 @@ def get_user_expenses():
             amount_of_expense = float(amount_of_expense)
             break
         except ValueError:
-            print(blue("Invalid input. Please enter a valid number "
+            print(green("Invalid input. Please enter a valid number "
                   "(e.g. 1200.50, 5, 7.23)."))
 
     category_expense = [
@@ -118,9 +126,9 @@ def get_user_expenses():
                                       amount=amount_of_expense)
                 return new_expense
             else:
-                print("Invalid category. Please try again.")
+                print(green("Invalid category. Please try again."))
         except ValueError:
-            print("Invalid input. Please enter a valid number.")
+            print(green("Invalid input. Please enter a valid number."))
 
 
 def save_expenses_to_google_sheet(expense_store):
@@ -141,7 +149,7 @@ def save_expenses_to_google_sheet(expense_store):
             expense_dict["amount"]])
         print("Saved successfully.🤗")
     except Exception as e:
-        print(f"An error occurred while saving: {str(e)}")
+        print(green(f"An error occurred while saving: {str(e)}"))
 
 
 def calculate_total_expenses_by_category():
@@ -167,19 +175,19 @@ def calculate_total_expenses_by_category():
                     categories_total[category] = 0
                 categories_total[category] += float(amount)
             else:
-                print(f"Skipping row: {row} - Expected 3 values in "
-                      f"each row, found {len(row)}")
+                print(green(f"Skipping row: {row} - Expected 3 values in "
+                      f"each row, found {len(row)}"))
 
         if not categories_total:
-            print("No valid expenses found in categories.")
+            print(green("No valid expenses found in categories."))
         else:
             for category, total_amount in categories_total.items():
                 # total_amount is a folot it cannot be colored using
                 # the blue function directly.
                 print(f"{category}: \033[94m£{total_amount:.2f}\033[0m")
     except Exception as e:
-        print(f"An error occurred while calculating expenses "
-              f"by category: {str(e)}")
+        print(green(f"An error occurred while calculating expenses "
+              f"by category: {str(e)}"))
 
 
 def view_expenses_by_category():
@@ -213,9 +221,9 @@ def view_expenses_by_category():
                 for name, amount in categories[chosen_category]:
                     print(blue(f"  {name}: £{amount:.2f}"))
             else:
-                print("Invalid category number. Please try again.")
+                print(green("Invalid category number. Please try again."))
         else:
-            print("Invalid input. Please enter a number.")
+            print(green("Invalid input. Please enter a number."))
 
 
 def total_amount_spent():
@@ -232,7 +240,7 @@ def total_amount_spent():
         amount = float(row[2])
         total_spent += amount
     else:
-        #total_spent is a folot it cannot be colored using the blue function directly.
+        # total_spent is a folot it cannot be colored using the blue function directly.
         print(f"Total amount spent: \033[94m£{total_spent:.2f}\033[0m")
 
 
@@ -245,7 +253,7 @@ def set_up_monthly_budget():
         monthly_budget = float(input(blue("Enter your monthly budget: ") + "£"))
 
         if monthly_budget < 0:
-            print(blue("Monthly budget cannot be negative. "
+            print(green("Monthly budget cannot be negative. "
                   "Please enter a valid budget."))
             return set_up_monthly_budget()
 
@@ -253,7 +261,7 @@ def set_up_monthly_budget():
         total_spent = calculate_total_spent()
         return monthly_budget
     except ValueError:
-        print(blue("Invalid input. Please enter a valid numeric value."))
+        print(green("Invalid input. Please enter a valid numeric value."))
         return set_up_monthly_budget()
 
 
@@ -306,11 +314,8 @@ def clear_expenses_data():
                 # Delete rows starting from row 2 (excluding row 1) to the
                 # last row with data
                 page1_worksheet.delete_rows(2)
-            print(f"Deleted {num_rows - 1} rows (excluding the first row).")
-        else:
-            print("No expenses data (excluding the first row) to clear.")
     except Exception as e:
-        print(f"An error occurred while clearing expenses data: {str(e)}")
+        print(green(f"An error occurred while clearing expenses data: {str(e)}"))
 
 
 def expenses_tracker_main():
@@ -318,15 +323,15 @@ def expenses_tracker_main():
     Main function to run the Expense Tracker application.
     """
     try:
-        # clear_expenses_data()
+        clear_expenses_data()
         calculate_total_spent()
-        print(red("\nWelcome to Expense Tracker"))
-        print(f"With Expense Tracker, you can easily manage and monitor "
-              f"your spending.")
-        print(f"You can add your daily expenses, view expenses by category, "
-              f"calculate totals,")
-        print("set up a monthly budget, and track your budget status.")
-        print("Let's start tracking your expenses!\n")
+        print(red("Welcome to Expense Tracker"))
+        print(red(f"With Expense Tracker, you can easily manage and monitor "
+              f"your spending."))
+        print(red(f"You can add your daily expenses, view expenses by category, "
+              f"calculate totals,"))
+        print(red("set up a monthly budget, and track your budget status."))
+        print(red("Let's start tracking your expenses!\n"))
 
         while True:
             print("\nChoose an option:")
