@@ -92,7 +92,7 @@ def get_user_expenses():
                   "(only letters and spaces allowed)."))
 
     while True:
-        amount_of_expense = input(blue("Enter the expense amount: "))
+        amount_of_expense = input(blue("Enter the expense amount: ") + "£")
         amount_of_expense = remove_commas(amount_of_expense)
 
         try:
@@ -136,6 +136,7 @@ def save_expenses_to_google_sheet(expense_store):
     Save an expense to the Google Sheets document.
     """
     try:
+        global total_spent
         expense_dict = {
             "name": expense_store.name,
             "category": expense_store.category,
@@ -147,7 +148,10 @@ def save_expenses_to_google_sheet(expense_store):
             expense_dict["name"],
             expense_dict["category"],
             expense_dict["amount"]])
+        total_spent += expense_store.amount
         print("Saved successfully.🤗")
+        # Recalculate budget left and daily budget
+        monthly_budget_left()
     except Exception as e:
         print(green(f"An error occurred while saving: {str(e)}"))
 
@@ -245,9 +249,9 @@ def total_amount_spent():
 
 def set_up_monthly_budget():
     """
-    Set up the user's monthly budget and calculate total spent.
+    Set up the user's monthly budget.
     """
-    global monthly_budget, total_spent
+    global monthly_budget
     try:
         monthly_budget = float(input(blue("Enter the monthly budget: ") + "£"))
 
@@ -255,9 +259,6 @@ def set_up_monthly_budget():
             print(green("Monthly budget cannot be negative. "
                   "Please enter a valid budget."))
             return set_up_monthly_budget()
-
-        # Calculate total spent when setting up the monthly budget
-        total_spent = calculate_total_spent()
         return monthly_budget
     except ValueError:
         print(green("Invalid input. Please enter a valid numeric value."))
@@ -275,7 +276,8 @@ def calculate_total_spent():
     for row in data[2:]:
         amount = float(row[2])
         total_spent += amount
-    return total_spent
+    # Recalculate budget left and daily budget
+    monthly_budget_left()
 
 
 def monthly_budget_left():
@@ -283,7 +285,7 @@ def monthly_budget_left():
     Calculate and display the monthly budget left and daily budget.
     """
     if monthly_budget == 0:
-        print("Please set up a monthly budget to view the budget left.")
+        print(green("Please set up a monthly budget to view the budget left."))
     else:
         budget_left = monthly_budget - total_spent
 
@@ -294,15 +296,16 @@ def monthly_budget_left():
 
         if budget_left < 0:
             savings_covered = total_spent - monthly_budget
-            print(red(f"⚠ Warning ⚠ : Your budget of ") +
+            print(red(f"⚠ Warning ⚠\nYour budget of ") +
                   f"\033[94m£{monthly_budget:.2f}\033[0m" +
-                  f"red(' is smaller than your total spent of ')" +
+                  red(f" is smaller than your total spent of") +
                   f"\033[94m£{total_spent:.2f}\033[0m" + red("."))
             print(red("You've taken ") + f"\033[94m£{savings_covered:.2f}"
                   f"\033[0m" + red(" from your savings to cover the deficit."))
         else:
-            print(f"Monthly budget left: \033[94m£{budget_left:.2f}\033[0m,"
-                  f"Budget per day left: \033[94m£{daily_budget:.2f}\033[0m")
+            print(f"Monthly Budget is: \033[94m£{monthly_budget:.2f}\033[0m")
+            print(f"Monthly budget left: \033[94m£{budget_left:.2f}\033[0m")
+            print(f"Budget per day left: \033[94m£{daily_budget:.2f}\033[0m")
 
 
 def clear_expenses_data():
