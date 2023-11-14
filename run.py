@@ -26,6 +26,10 @@ RESET = "\033[0m"
 
 
 def print_ascii_art(file_path):
+    """
+    Function to change the text stle
+    Also to open the imported file
+    """
     try:
         with open(file_path, 'r') as file:
             ascii_art = file.read()
@@ -93,7 +97,7 @@ def get_user_expenses():
     """
 
     while True:
-        name_of_expense = input(blue("Enter your expense name:\n"))
+        name_of_expense = input(blue("Enter your expense name:"))
         if is_valid_input(name_of_expense):
             break
         else:
@@ -101,7 +105,7 @@ def get_user_expenses():
                   "(only letters and spaces allowed)."))
 
     while True:
-        amount_of_expense = input(blue("Enter the expense amount: ") + "£\n")
+        amount_of_expense = input(blue("Enter the expense amount: ") + "£")
         amount_of_expense = remove_commas(amount_of_expense)
 
         try:
@@ -127,7 +131,7 @@ def get_user_expenses():
         try:
             select_index_value = int(
                 input(f"Enter one of the category "
-                      f"numbers: {range_of_value}\n")) - 1
+                      f"numbers: {range_of_value}")) - 1
             if select_index_value in range(len(category_expense)):
                 chosen_category = category_expense[select_index_value]
                 new_expense = Expense(name=name_of_expense,
@@ -221,7 +225,7 @@ def view_expenses_by_category():
         print(f"{index}: {category}")
 
     while True:
-        category_choice = input("Enter the category number (0 to exit): \n")
+        category_choice = input("Enter the category number (0 to exit): ")
         if category_choice == "0":
             break
         elif category_choice.isdigit():
@@ -260,7 +264,7 @@ def set_up_monthly_budget():
     """
     global monthly_budget
     try:
-        monthly_budget = float(input(blue("Enter monthly budget: ") + "£\n"))
+        monthly_budget = float(input(blue("Enter monthly budget: ") + "£"))
 
         if monthly_budget < 0:
             print(green("Monthly budget cannot be negative. "
@@ -356,7 +360,7 @@ def expenses_tracker_main():
             print("  6: View Monthly Budget Status")
             print("  7: Exit")
 
-            choice = input(blue("\nPlease select an option: \n"))
+            choice = input(blue("\nPlease select an option: "))
 
             if choice == "1":
                 expense = get_user_expenses()
