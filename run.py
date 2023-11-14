@@ -25,6 +25,32 @@ GREEN = "\033[92m"
 RESET = "\033[0m"
 
 
+def print_ascii_art(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            ascii_art = file.read()
+            print(ascii_art)
+    except FileNotFoundError:
+        print("ASCII art file not found.")
+
+
+def print_centered_title(title):
+    """
+    Print the title with an underline for a stand-out effect.
+    """
+    columns, _ = shutil.get_terminal_size()
+    padding = (columns - len(title)) // 2
+    print(" " * padding + title)
+    print("-" * len(title))
+
+
+def print_title(title):
+    """
+    Print the title with modified style.
+    """
+    print(f"{TITLE_STYLE}{title}{RESET}")
+
+
 def blue(text):
     """
     Function to transform the text to color blue.
@@ -328,7 +354,8 @@ def expenses_tracker_main():
     try:
         clear_expenses_data()
         calculate_total_spent()
-        print(red("Welcome to Expense Tracker"))
+        ascii_art_file_path = '/workspaces/exptrack/ascii-text-art.txt'
+        print_ascii_art(ascii_art_file_path)
         print(red(f"With Expense Tracker, you can easily manage and monitor "
                   f"your spending."))
         print(red(f"You can add your daily expenses, view expenses by "
