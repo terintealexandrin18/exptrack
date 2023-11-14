@@ -337,7 +337,7 @@ def expenses_tracker_main():
     try:
         clear_expenses_data()
         calculate_total_spent()
-        ascii_art_file_path = '/workspaces/exptrack/ascii-text-art.txt'
+        ascii_art_file_path = 'ascii-text-art.txt'
         print_ascii_art(ascii_art_file_path)
         print(red(f"With Expense Tracker, you can easily manage and monitor "
                   f"your spending."))
