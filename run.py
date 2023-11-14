@@ -150,8 +150,6 @@ def save_expenses_to_google_sheet(expense_store):
             expense_dict["amount"]])
         total_spent += expense_store.amount
         print("Saved successfully.🤗")
-        # Recalculate budget left and daily budget
-        monthly_budget_left()
     except Exception as e:
         print(green(f"An error occurred while saving: {str(e)}"))
 
@@ -276,9 +274,7 @@ def calculate_total_spent():
     for row in data[2:]:
         amount = float(row[2])
         total_spent += amount
-    # Recalculate budget left and daily budget
-    monthly_budget_left()
-
+    
 
 def monthly_budget_left():
     """
