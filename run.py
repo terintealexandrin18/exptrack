@@ -34,23 +34,6 @@ def print_ascii_art(file_path):
         print("ASCII art file not found.")
 
 
-def print_centered_title(title):
-    """
-    Print the title with an underline for a stand-out effect.
-    """
-    columns, _ = shutil.get_terminal_size()
-    padding = (columns - len(title)) // 2
-    print(" " * padding + title)
-    print("-" * len(title))
-
-
-def print_title(title):
-    """
-    Print the title with modified style.
-    """
-    print(f"{TITLE_STYLE}{title}{RESET}")
-
-
 def blue(text):
     """
     Function to transform the text to color blue.
@@ -110,7 +93,7 @@ def get_user_expenses():
     """
 
     while True:
-        name_of_expense = input(blue("Enter your expense name: "))
+        name_of_expense = input(blue("Enter your expense name:\n"))
         if is_valid_input(name_of_expense):
             break
         else:
@@ -118,7 +101,7 @@ def get_user_expenses():
                   "(only letters and spaces allowed)."))
 
     while True:
-        amount_of_expense = input(blue("Enter the expense amount: ") + "£")
+        amount_of_expense = input(blue("Enter the expense amount: ") + "£\n")
         amount_of_expense = remove_commas(amount_of_expense)
 
         try:
@@ -144,7 +127,7 @@ def get_user_expenses():
         try:
             select_index_value = int(
                 input(f"Enter one of the category "
-                      f"numbers: {range_of_value}")) - 1
+                      f"numbers: {range_of_value}\n")) - 1
             if select_index_value in range(len(category_expense)):
                 chosen_category = category_expense[select_index_value]
                 new_expense = Expense(name=name_of_expense,
@@ -238,7 +221,7 @@ def view_expenses_by_category():
         print(f"{index}: {category}")
 
     while True:
-        category_choice = input("Enter the category number (0 to exit): ")
+        category_choice = input("Enter the category number (0 to exit): \n")
         if category_choice == "0":
             break
         elif category_choice.isdigit():
@@ -277,7 +260,7 @@ def set_up_monthly_budget():
     """
     global monthly_budget
     try:
-        monthly_budget = float(input(blue("Enter the monthly budget: ") + "£"))
+        monthly_budget = float(input(blue("Enter monthly budget: ") + "£\n"))
 
         if monthly_budget < 0:
             print(green("Monthly budget cannot be negative. "
@@ -300,7 +283,7 @@ def calculate_total_spent():
     for row in data[2:]:
         amount = float(row[2])
         total_spent += amount
-    
+
 
 def monthly_budget_left():
     """
@@ -373,7 +356,7 @@ def expenses_tracker_main():
             print("  6: View Monthly Budget Status")
             print("  7: Exit")
 
-            choice = input(blue("\nPlease select an option: "))
+            choice = input(blue("\nPlease select an option: \n"))
 
             if choice == "1":
                 expense = get_user_expenses()
