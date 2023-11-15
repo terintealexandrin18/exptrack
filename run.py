@@ -27,8 +27,7 @@ RESET = "\033[0m"
 
 def print_ascii_art(file_path):
     """
-    Function to change the text stle
-    Also to open the imported file
+    Function to change the text style
     """
     try:
         with open(file_path, 'r') as file:
@@ -64,12 +63,14 @@ class Expense:
         """
         Create an Expense object with a name, category, and amount.
         """
-
         self.name = name
         self.category = category
         self.amount = amount
 
     def __repr__(self):
+        """
+        Return a string representation of the Expense object
+        """
         return f"Expense: {self.name}, {self.category}, £{self.amount:.2f}"
 
 
@@ -95,11 +96,11 @@ def get_user_expenses():
     Get user input for expense details (name, category, amount) and
     return an Expense object.
     """
-
     while True:
-        name_of_expense = input(blue("Enter your expense name:"))
+        name_of_expense = input(blue("Enter your expense name: "))
         if is_valid_input(name_of_expense):
             break
+
         else:
             print(green("Invalid input. Please enter a valid expense name "
                   "(only letters and spaces allowed)."))
@@ -111,6 +112,7 @@ def get_user_expenses():
         try:
             amount_of_expense = float(amount_of_expense)
             break
+
         except ValueError:
             print(green("Invalid input. Please enter a valid number "
                   "(e.g. 1200.50, 5, 7.23)."))
@@ -128,18 +130,22 @@ def get_user_expenses():
         for x, category_name in enumerate(category_expense):
             print(f"  {x + 1}. {category_name}")
         range_of_value = f"[1 - {len(category_expense)}]"
+
         try:
             select_index_value = int(
                 input(f"Enter one of the category "
                       f"numbers: {range_of_value}")) - 1
+
             if select_index_value in range(len(category_expense)):
                 chosen_category = category_expense[select_index_value]
                 new_expense = Expense(name=name_of_expense,
                                       category=chosen_category,
                                       amount=amount_of_expense)
                 return new_expense
+
             else:
                 print(green("Invalid category. Please try again."))
+
         except ValueError:
             print(green("Invalid input. Please enter a valid number."))
 
@@ -163,6 +169,7 @@ def save_expenses_to_google_sheet(expense_store):
             expense_dict["amount"]])
         total_spent += expense_store.amount
         print("Saved successfully.🤗")
+
     except Exception as e:
         print(green(f"An error occurred while saving: {str(e)}"))
 
@@ -178,28 +185,28 @@ def calculate_total_expenses_by_category():
 
         if len(data) < 2:
             print("No expenses found.")
-            return
 
         categories_total = {}
         # Start iterating from the second row (index 1) to include row 2
         for row in data[1:]:
             if len(row) >= 3:
                 category, amount = row[1], row[2]
-                # Adjust column indices as needed
+
                 if category not in categories_total:
                     categories_total[category] = 0
                 categories_total[category] += float(amount)
+
             else:
                 print(green(f"Skipping row: {row} - Expected 3 values in "
                       f"each row, found {len(row)}"))
 
         if not categories_total:
             print(green("No valid expenses found in categories."))
+
         else:
             for category, total_amount in categories_total.items():
-                # total_amount is a folot it cannot be colored using
-                # the blue function directly.
                 print(f"{category}: \033[94m£{total_amount:.2f}\033[0m")
+
     except Exception as e:
         print(green(f"An error occurred while calculating expenses "
               f"by category: {str(e)}"))
@@ -217,6 +224,7 @@ def view_expenses_by_category():
     categories = {}
     for row in data[1:]:
         name, category, amount = row
+
         if category not in categories:
             categories[category] = []
         categories[category].append((name, float(amount)))
@@ -228,15 +236,19 @@ def view_expenses_by_category():
         category_choice = input("Enter the category number (0 to exit): ")
         if category_choice == "0":
             break
+
         elif category_choice.isdigit():
             category_choice = int(category_choice)
+
             if 1 <= category_choice <= len(categories):
                 chosen_category = list(categories.keys())[category_choice - 1]
                 print(f"Expenses in the category '{chosen_category}':")
                 for name, amount in categories[chosen_category]:
                     print(blue(f"  {name}: £{amount:.2f}"))
+
             else:
                 print(green("Invalid category number. Please try again."))
+
         else:
             print(green("Invalid input. Please enter a number."))
 
@@ -250,10 +262,12 @@ def total_amount_spent():
     data = page1_worksheet.get_all_values()
     global total_spent
     total_spent = 0
+
     # Start iterating from the second row (index 1) to include row 2
     for row in data[1:]:
         amount = float(row[2])
         total_spent += amount
+
     else:
         print(f"Total amount spent: \033[94m£{total_spent:.2f}\033[0m")
 
@@ -271,6 +285,7 @@ def set_up_monthly_budget():
                   "Please enter a valid budget."))
             return set_up_monthly_budget()
         return monthly_budget
+
     except ValueError:
         print(green("Invalid input. Please enter a valid numeric value."))
         return set_up_monthly_budget()
@@ -295,9 +310,10 @@ def monthly_budget_left():
     """
     if monthly_budget == 0:
         print(green("Please set up a monthly budget to view the budget left."))
+
     else:
         budget_left = monthly_budget - total_spent
-
+        # Time and days
         now = datetime.datetime.now()
         days_in_the_month = calendar.monthrange(now.year, now.month)[1]
         remaining_days = days_in_the_month - now.day
@@ -311,6 +327,7 @@ def monthly_budget_left():
                   f"\033[94m£{total_spent:.2f}\033[0m" + red("."))
             print(red("You've taken ") + f"\033[94m£{savings_covered:.2f}"
                   f"\033[0m" + red(" from your savings to cover the deficit."))
+
         else:
             print(f"Monthly Budget is: \033[94m£{monthly_budget:.2f}\033[0m")
             print(f"Monthly budget left: \033[94m£{budget_left:.2f}\033[0m")
@@ -324,11 +341,11 @@ def clear_expenses_data():
     try:
         page1_worksheet = SHEET.worksheet("page1")
         num_rows = len(page1_worksheet.get_all_values())
+
         if num_rows > 1:
             for _ in range(num_rows - 1):
-                # Delete rows starting from row 2 (excluding row 1) to the
-                # last row with data
                 page1_worksheet.delete_rows(2)
+
     except Exception as e:
         print(green(f"An error occurred while clearing "
                     f"expenses data: {str(e)}"))
