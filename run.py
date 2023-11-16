@@ -1,3 +1,4 @@
+# Import necessary modules
 import gspread
 import calendar
 import datetime
@@ -9,6 +10,7 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive"
 ]
 
+# Load Google Sheets credentials from the service account file
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
@@ -18,11 +20,13 @@ SHEET = GSPREAD_CLIENT.open('Expense Tracker')
 monthly_budget = 0
 total_spent = 0
 
-# ANSI escape code for blue text
+# ANSI escape codes for text color
 BLUE = "\033[94m"
 RED = "\033[91m"
 GREEN = "\033[92m"
 RESET = "\033[0m"
+
+# Function to print ASCII art from a file
 
 
 def print_ascii_art(file_path):
@@ -35,6 +39,8 @@ def print_ascii_art(file_path):
             print(ascii_art)
     except FileNotFoundError:
         print("ASCII art file not found.")
+
+# Functions to apply ANSI escape codes for text color
 
 
 def blue(text):
@@ -57,6 +63,8 @@ def green(text):
     """
     return f"{GREEN}{text}{RESET}"
 
+# Define Expense class
+
 
 class Expense:
     def __init__(self, name, category, amount) -> None:
@@ -73,6 +81,8 @@ class Expense:
         """
         return f"Expense: {self.name}, {self.category}, £{self.amount:.2f}"
 
+# Function to remove commas from input string
+
 
 def remove_commas(input_str):
     """
@@ -80,6 +90,8 @@ def remove_commas(input_str):
     Will return the input string with commas removed.
     """
     return input_str.replace(',', '')
+
+# Function to check if the input string contains only letters and spaces
 
 
 def is_valid_input(input_str):
@@ -89,6 +101,8 @@ def is_valid_input(input_str):
     return input_str.strip() and all(
         c.isalpha() or c.isspace() for c in input_str
     )
+
+# Function to get user input for expense details and return an Expense object
 
 
 def get_user_expenses():
@@ -150,6 +164,9 @@ def get_user_expenses():
             print(green("Invalid input. Please enter a valid number."))
 
 
+# Function to save an expense to the Google Sheets document
+
+
 def save_expenses_to_google_sheet(expense_store):
     """
     Save an expense to the Google Sheets document.
@@ -172,6 +189,8 @@ def save_expenses_to_google_sheet(expense_store):
 
     except Exception as e:
         print(green(f"An error occurred while saving: {str(e)}"))
+
+# Function to calculate and display total expenses by category
 
 
 def calculate_total_expenses_by_category():
@@ -210,6 +229,8 @@ def calculate_total_expenses_by_category():
     except Exception as e:
         print(green(f"An error occurred while calculating expenses "
               f"by category: {str(e)}"))
+
+# Function to view expenses by category
 
 
 def view_expenses_by_category():
@@ -253,6 +274,9 @@ def view_expenses_by_category():
             print(green("Invalid input. Please enter a number."))
 
 
+# Function to calculate and display the total amount spent this month
+
+
 def total_amount_spent():
     """
     Calculate and display the total amount spent this month.
@@ -270,6 +294,9 @@ def total_amount_spent():
 
     else:
         print(f"Total amount spent: \033[94m£{total_spent:.2f}\033[0m")
+
+
+# Function to set up the user's monthly budget
 
 
 def set_up_monthly_budget():
@@ -291,6 +318,9 @@ def set_up_monthly_budget():
         return set_up_monthly_budget()
 
 
+# Function to calculate and return the total amount spent this month
+
+
 def calculate_total_spent():
     """
     Calculate and return the total amount spent this month.
@@ -304,6 +334,9 @@ def calculate_total_spent():
         total_spent += amount
 
 
+# Function to calculate and display the monthly budget left and daily budget
+
+
 def monthly_budget_left():
     """
     Calculate and display the monthly budget left and daily budget.
@@ -313,6 +346,7 @@ def monthly_budget_left():
 
     else:
         budget_left = monthly_budget - total_spent
+
         # Time and days
         now = datetime.datetime.now()
         days_in_the_month = calendar.monthrange(now.year, now.month)[1]
@@ -334,6 +368,10 @@ def monthly_budget_left():
             print(f"Budget per day left: \033[94m£{daily_budget:.2f}\033[0m")
 
 
+# Function to clear all expenses data in the Google Sheet, excluding
+# the first row
+
+
 def clear_expenses_data():
     """
     Clear all expenses data in the Google Sheet, excluding the first row.
@@ -349,6 +387,9 @@ def clear_expenses_data():
     except Exception as e:
         print(green(f"An error occurred while clearing "
                     f"expenses data: {str(e)}"))
+
+
+# Main function to run the Expense Tracker application
 
 
 def expenses_tracker_main():
@@ -399,6 +440,9 @@ def expenses_tracker_main():
                 print(green("\nInvalid choice. Please try again."))
     except Exception as e:
         print(green(f"An error occurred: {str(e)}"))
+
+
+# Run the main function to start the Expense Tracker application
 
 
 expenses_tracker_main()
