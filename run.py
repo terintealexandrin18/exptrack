@@ -185,7 +185,7 @@ def save_expenses_to_google_sheet(expense_store):
             expense_dict["category"],
             expense_dict["amount"]])
         total_spent += expense_store.amount
-        print("Saved successfully.🤗")
+        print(green("Saved successfully.🤗"))
 
     except Exception as e:
         print(green(f"An error occurred while saving: {str(e)}"))
