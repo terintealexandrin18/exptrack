@@ -23,10 +23,6 @@ The app was inspired by the traditional pen-and-paper method and offers a digita
         - Flowchart
     - 3 Features
         - Existing Features
-            - a
-            - b
-            - c 
-            - etc
         - Future Features
     - 4 Technologies
         - Languages Used
@@ -83,6 +79,11 @@ to be add.
 
 ### Existing Features
 
+Google Sheet:
+ - User expenses are stored in a Google Sheet. Currently, the app does not support multiple user logins and passwords, so the data is cleared each time the app is run.
+
+![google sheet](assets/images/googlesheet.png)
+
 Title:
  - The Expense Tracker application starts with an eye-catching tile created with ASCII art. This introduction is not only visually appealing but also serves to explain the purpose of the app, enhancing the user experience. It creates a positive and engaging environment for expense tracking, making it more enjoyable for the user.
 
@@ -123,5 +124,38 @@ Expense Category Selection:
    ![budget higher than total expenses](assets/images/highbudgetstatus.png)
 
  - Budget < Total Expenses
- 
+
    ![budget lower than total expenses](assets/images/lowbudgetstatus.png)
+
+
+### Future Features
+
+- Create an interactive budget planning tool that helps users allocate funds to various categories based on their priorities and financial goals.
+- Allow multiple users (e.g., family members or partners) to collaborate on a shared budget. This can be particularly useful for households managing finances together.
+- Set up alerts and notifications to inform users when they are approaching or exceeding budget limits. This proactive approach helps users stay on track with their financial goals.
+- Provide visual analytics and insights into spending patterns over time. Graphs, charts, and reports can help users understand trends and make more informed financial decisions.
+- Enable users to create custom budget categories based on their specific needs. This allows for a more personalized budgeting experience.
+
+
+## Technologies
+
+### Languages Used
+
+ - [Python3](https://en.wikipedia.org/wiki/Python_(programming_language)) - Used for writing the Expense Tracker code.
+
+
+### Frameworks, Libraries and Programs Used
+
+- Libraries:
+    - gspread - This library is used for accessing Google Sheets API. It allows you to interact with Google Sheets and perform operations such as reading and writing data.
+    - calendar - This is a standard Python library for working with dates and calendars. Used in the app to get the number of days in the current month.
+    - datetime - This is a standard Python library used for working with dates and times. Used in the app to get the current date and time.
+    - google.oauth2.service_account - This library provides tools for working with Google service accounts. Used in the app to load Google Sheets credentials from a service account file.
+
+- [CODEANYWHERE](https://codeanywhere.com/) - Used for writing the code, committing and push it to GitHub.
+- [GITHUB](https://github.com/) - Used to store the project after finishing writing in Codeanywhere.
+- [HEROKU](https://dashboard.heroku.com/) - Used to deploy the app.
+- [ASCII ART](https://www.asciiart.eu/text-to-ascii-art) - Used to generate the title of the app "Expense Tracker"
+- [LUCIDCHART](https://www.lucidchart.com/pages/) - Used the create the flowchart.
+- SNIPPING TOOL - Used for screenshot and snipping.
+- PAINT - Used to combine the snipped images   
