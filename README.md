@@ -84,5 +84,44 @@ to be add.
 ### Existing Features
 
 Title:
- - 
+ - The Expense Tracker application starts with an eye-catching tile created with ASCII art. This introduction is not only visually appealing but also serves to explain the purpose of the app, enhancing the user experience. It creates a positive and engaging environment for expense tracking, making it more enjoyable for the user.
 
+![tilte of the app Expense Tracker](assets/images/title.png)
+
+Expense Category Selection:
+ - Simplifies expense entry by providing predefined categories with emoji icons, making it faster and more user-friendly. Emoji icons also improve accessibility for users who prefer symbols over text.
+ 
+ ![category  of the expenses](assets/images/category.png)
+
+ View Expenses by Category:
+ - By analyzing spending in specific categories, users can better manage their expenses and budgets and track where their money is going.
+
+ ![expenses by category](assets/images/viewexpensesbycategory.png)
+
+ Total Expenses by Category:
+ - Offers users insights into their spending patterns by displaying total expenses in different categories, facilitating better financial awareness.
+
+ ![total expenses by category](assets/images/totelexpensesbycategory.png)
+
+ View Total Amount Spent This Month:
+ - The feature provides users with a comprehensive overview of their monthly spending, promotes financial awareness, and facilitates informed and timely decision-making.
+
+![monthly spent](assets/images/totalspent.png)
+
+
+ Set up Monthly Budget:
+ - Users can set up a monthly budget for their expenses, contributing to financial planning, spending limits and tracking.
+
+ ![set up monthly budget](assets/images/monthlybudget.png)
+
+
+ View Monthly Budget Status:
+ - The application calculates and displays the monthly budget left, total amount spent, and daily budget. It provides warnings for budget deficits and encourages users to stay within their budget.
+
+ - Budget > Total Expenses
+
+   ![budget higher than total expenses](assets/images/highbudgetstatus.png)
+
+ - Budget < Total Expenses
+ 
+   ![budget lower than total expenses](assets/images/lowbudgetstatus.png)
