@@ -35,9 +35,8 @@ The app was inspired by the traditional pen-and-paper method and offers a digita
         - Compatibility
         - Manual Testing
     - 6 Deployment
-    - 7 Finished Product
-    - 8 Credit
-    - 9 Acknowledgments
+    - 7 Credit
+    - 8 Acknowledgments
 
 
 ## User Experience
@@ -155,10 +154,10 @@ Expense Category Selection:
 - [CODEANYWHERE](https://codeanywhere.com/) - Used for writing the code, committing and push it to GitHub.
 - [GITHUB](https://github.com/) - Used to store the project after finishing writing in Codeanywhere.
 - [HEROKU](https://dashboard.heroku.com/) - Used to deploy the app.
-- [ASCII ART](https://www.asciiart.eu/text-to-ascii-art) - Used to generate the title of the app "Expense Tracker"
+- [ASCII ART](https://www.asciiart.eu/text-to-ascii-art) - Used to generate the title of the app "Expense Tracker".
 - [LUCIDCHART](https://www.lucidchart.com/pages/) - Used the create the flowchart.
 - [PEP8CI](https://pep8ci.herokuapp.com/) - Used to validate the Python code.
-
+- [WEBFX](https://www.webfx.com/tools/emoji-cheat-sheet/) - Used to copy the emojy into my code.
 
 - Program Used:
     - SNIPPING TOOL - Used for screenshot and snipping.
@@ -228,3 +227,23 @@ Manual Testing
     14: Click "Connect" once you choose the repository.
     15: Click on Enable automatic deployment and/or deploy manually.
     16: Click on Deploy.
+
+
+## Credit
+
+Media:
+
+- [ASCII ART](https://www.asciiart.eu/text-to-ascii-art) - Used to generate the title of the app "Expense Tracker".
+- [WEBFX](https://www.webfx.com/tools/emoji-cheat-sheet/) - Used to copy the emojy into my code.
+
+Code: 
+- The inspiration was from [this youtube link](https://www.youtube.com/watch?v=HTD86h69PtE&t=2s)
+- [STACKOVERFLOW](https://stackoverflow.com/) - used to gain a better understanding of the code I was implementing.
+- [W3SCHOOLS](https://www.w3schools.com/python/) - used to find new Python functions and get some inspiration.
+- Code Institute team for bits of advice.
+
+## Acknowledgments
+
+- Marcel has provided valuable tutoring, offering guidance, feedback, and support, while also addressing key points discussed during our meetings.
+- My wife for taking the time to check the website and providing me with valuable feedback. Her input was truly helpful.
+- Code institute team for support and advice.
