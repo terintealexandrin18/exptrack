@@ -157,5 +157,28 @@ Expense Category Selection:
 - [HEROKU](https://dashboard.heroku.com/) - Used to deploy the app.
 - [ASCII ART](https://www.asciiart.eu/text-to-ascii-art) - Used to generate the title of the app "Expense Tracker"
 - [LUCIDCHART](https://www.lucidchart.com/pages/) - Used the create the flowchart.
-- SNIPPING TOOL - Used for screenshot and snipping.
-- PAINT - Used to combine the snipped images   
+- [PEP8CI](https://pep8ci.herokuapp.com/) - Used to validate the Python code.
+
+
+- Program Used:
+    - SNIPPING TOOL - Used for screenshot and snipping.
+    - PAINT - Used to combine the snipped images   
+
+
+## Testing
+
+### Bugs
+ 
+- Unfixed Bugs. 
+    - No unfixed Bugs
+
+- Fixed Bugs
+    - Currently, there are no unresolved bugs in the project. However, during my work on the project, I encountered an issue with the "View Monthly Budget Status" function. It was not working properly and I found out that in order for it to work, I had to run the "View Total Amount Spent This Month" function first. To resolve this issue, I had to add some global variables to the code.
+
+### Code Validation
+
+- The code was validated by [CI Python Linter](https://pep8ci.herokuapp.com/). Code is clear, no error found.
+
+![python code validation](assets/images/pep8civalidator.png)
+
+### Compatibility
