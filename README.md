@@ -10,7 +10,7 @@ The app was inspired by the traditional pen-and-paper method and offers a digita
 
 [Github Repository](https://github.com/terintealexandrin18/exptrack)
 
-![Image of the welecome/start screen python expense tracker app](assets/mainscreen.png)
+![Image of the welecome/start screen python expense tracker app](assets/images/mainscreen.png)
 
 
 ## Table of Contents
@@ -182,3 +182,49 @@ Expense Category Selection:
 ![python code validation](assets/images/pep8civalidator.png)
 
 ### Compatibility
+
+- Browser Compatibility. The pythone app has been tested on the following browsers:
+
+|Name of the Browser|Compatible ✓ / Incompatible ✕ |
+|--|--|
+|Google Chrome|✓ |
+|Internet Explorer| ✓|
+
+### Manual Testing
+
+Manual Testing
+
+| What Has Been Check | The Outcome  | Image With Check| Pass/Fail |
+|--|--|--|--|
+|Main Meniu| Check if can submit different caracters which are not in meniu|![check the meniu of main screen](assets/images/meniucheck.png)|✓ |
+|Add Expense: Name|Check if the form can be submitted with empty fields and with a combination of letters and numbers.|![add expense name](assets/images/expensename.png)|✓ |
+|Add Expense: Amount|Check if the form can be submitted with empty fields and a combination of letters and numbers.|![add expense name](assets/images/expenseamount.png)|✓ |
+|Add Expense: Category|Check if the form can be submitted with empty fields and selecting a non-listed number.|![add expense category](assets/images/expensecategory.png)|✓ |
+|View Expenses by Category|Check if the form can be submitted with empty fields and choosing a different number nonlisted and if the loop is working. |![view expenses by category](assets/images/expenseviewcategory.png)|✓ |
+|Calculate Total Expenses By Category| Check if can view expense categories with their respective total amounts, but only for categories with associated expenses.|![total expenses by category](assets/images/totalexpenses.png)|✓ |
+|View Total Amount Spent This Month| Check if can view the total expense amount.|![total expenses this month](assets/images/totalmonthlyspent.png)|✓ |
+|Set Up Monthly Budget| Check if the form can be submitted with empty fields or with letters. |![set monthly budget](assets/images/setbudget.png)|✓ |
+|View Monthly Budget Status| Check the customized message and status for Budget > Expense, Budget < Expense, and No budget set up.|![high budget status](assets/images/bigbudget.png) ![small budget status](assets/images/smallbudget.png) ![no budget set up](assets/images/nobudget.png) | ✓ |
+|Exit| Check if will close the program|![exit program](assets/images/exit.png)|✓ |
+
+
+## Deployment
+
+- This app was created using Codeanywhere and then used the git push command to commit and push it to GitHub. The app has been deployed by using Heroku.
+- I used the folowing steps: 
+    1: Add the requirements.txt file and run: pip3 freeze > requirements.txt in the console.
+    2: Commit the changes and push it to GitHub.
+    3: Access Heroku website.
+    4: Log In and click on dashbord.
+    5: Click on "New" and select "Create a new app".
+    6: Give the app a name, select the region and click on "Create app".
+    7: Go to "Settings" and click on "Config Vars".
+    8: Click on "Reveals Config Vars" and add the KEY: CREDS and the VALUE stored in creds.json file.
+    9: Same in "Config Vars" add the Config Var, KEY: PORT and VALUE: 8000.
+    10: Click on "Buildpacks" select the language "Python" and add it to buildpack.
+    11: Click on "Buildpacks" select the language "Nodejs" and add it to buildpack.
+    12: Go to "Deploy" and click on "Deployment method". Connect the account with GitHub.
+    13: In the "Connect to GitHub" section, click the "Search" button to locate the repository for deployment.
+    14: Click "Connect" once you choose the repository.
+    15: Click on Enable automatic deployment and/or deploy manually.
+    16: Click on Deploy.
