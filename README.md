@@ -2,41 +2,41 @@
 
 Expense Tracker is a Python-built application that seamlessly integrates with Google Sheets via API, providing users with a streamlined solution for tracking and controlling their monthly expenses. 
 
-The app has a user-friendly interface, real-time data synchronization, and insightful visualizations, empowering individuals to make informed financial decisions while ensuring the security of their sensitive information. By analyzing spending patterns and setting budget goals, Expense Tracker offers a convenient and secure way to manage finances in the digital era.
+The app has a user-friendly interface, real-time data synchronization, and insightful visualizations, empowering individuals to make informed financial decisions while ensuring the security of their sensitive information. By analysing spending patterns and setting budget goals, Expense Tracker offers a convenient and secure way to manage finances in the digital era.
 
 The app was inspired by the traditional pen-and-paper method and offers a digital solution that leverages the power of technology to streamline expense tracking and financial management.
 
 [Live Website](https://expense-tracker-at-fd85a26ed02d.herokuapp.com/)
 
-[Github Repository](https://github.com/terintealexandrin18/exptrack)
+[GitHub Repository](https://github.com/terintealexandrin18/exptrack)
 
-![Image of the welecome/start screen python expense tracker app](assets/images/mainscreen.png)
+![Image of the welcome/start screen python expense tracker app](assets/images/mainscreen.png)
 
 
 ## Table of Contents
-    - 1 User Experience
-        - Project Goal
-        - User Stories
-    - 2 Design
-        - Page Layout
-        - Color Scheme
-        - Flowchart
-    - 3 Features
-        - Existing Features
-        - Future Features
-    - 4 Technologies
-        - Languages Used
-        - Frameworks, Libraries and Programs Used
-    - 5 Testing
-        - Bugs
-            - Fixed Bugs
-            - Unfixed Bugs
-        - Code Validation
-        - Compatibility
-        - Manual Testing
-    - 6 Deployment
-    - 7 Credit
-    - 8 Acknowledgments
+- [1 User Experience](#user-experience)
+    - [Project Goal](#project-goal)
+    - [User Stories](#user-stories)
+- [2 Design](#design)
+    - [Page Layout](#page-layout)
+    - [Color Scheme](#color-scheme)
+    - [Flowchart](#flowchart)
+- [3 Features](#features)
+    -[Existing Features](#existing-features)
+    -[Future Features](#future-features)
+- [4 Technologies](#technologies)
+    - [Languages Used](#languages-used)
+    - [Frameworks, Libraries and Programs Used](#frameworks-libraries-and-programs-used)
+- [5 Testing](#testing)
+    - [Bugs](#bugs)
+        - [Unfixed Bugs](#unfixed-bugs)
+        - [Fixed Bugs](#fixed-bugs)
+    - [Code Validation](#code-validation)
+    - [Compatibility](#compatibility)
+    - [Manual Testing](#manual-testing)
+- [6 Deployment](#deployment)
+- [7 Credit](#credit)
+- [8 Acknowledgments](#acknowledgments)
 
 
 ## User Experience
@@ -45,7 +45,7 @@ The app was inspired by the traditional pen-and-paper method and offers a digita
  - To build an app that is user-friendly and requires minimal instructions.
  - To ensure easy navigation throughout the app.
  - To implement a database that can store user input.
- - To incorporate input validation to prevent incorrect data entry
+ - To incorporate input validation to prevent incorrect data entry.
  - The program should run continuously until the user decides to stop it.
 
 ### User Stories
@@ -71,7 +71,7 @@ The app was inspired by the traditional pen-and-paper method and offers a digita
 
 ### Flowchart
 
-to be add.
+![flowchart](assets/images/chart.png)
 
 
 ## Features
@@ -86,7 +86,7 @@ Google Sheet:
 Title:
  - The Expense Tracker application starts with an eye-catching tile created with ASCII art. This introduction is not only visually appealing but also serves to explain the purpose of the app, enhancing the user experience. It creates a positive and engaging environment for expense tracking, making it more enjoyable for the user.
 
-![tilte of the app Expense Tracker](assets/images/title.png)
+![title of the app Expense Tracker](assets/images/title.png)
 
 Expense Category Selection:
  - Simplifies expense entry by providing predefined categories with emoji icons, making it faster and more user-friendly. Emoji icons also improve accessibility for users who prefer symbols over text.
@@ -94,7 +94,7 @@ Expense Category Selection:
  ![category  of the expenses](assets/images/category.png)
 
  View Expenses by Category:
- - By analyzing spending in specific categories, users can better manage their expenses and budgets and track where their money is going.
+ - By analysing spending in specific categories, users can better manage their expenses and budgets and track where their money is going.
 
  ![expenses by category](assets/images/viewexpensesbycategory.png)
 
@@ -146,7 +146,7 @@ Expense Category Selection:
 ### Frameworks, Libraries and Programs Used
 
 - Libraries:
-    - gspread - This library is used for accessing Google Sheets API. It allows you to interact with Google Sheets and perform operations such as reading and writing data.
+    - gspread - This library is used for accessing Google Sheets API. It allows to interact with Google Sheets and perform operations such as reading and writing data.
     - calendar - This is a standard Python library for working with dates and calendars. Used in the app to get the number of days in the current month.
     - datetime - This is a standard Python library used for working with dates and times. Used in the app to get the current date and time.
     - google.oauth2.service_account - This library provides tools for working with Google service accounts. Used in the app to load Google Sheets credentials from a service account file.
@@ -157,7 +157,7 @@ Expense Category Selection:
 - [ASCII ART](https://www.asciiart.eu/text-to-ascii-art) - Used to generate the title of the app "Expense Tracker".
 - [LUCIDCHART](https://www.lucidchart.com/pages/) - Used the create the flowchart.
 - [PEP8CI](https://pep8ci.herokuapp.com/) - Used to validate the Python code.
-- [WEBFX](https://www.webfx.com/tools/emoji-cheat-sheet/) - Used to copy the emojy into my code.
+- [WEBFX](https://www.webfx.com/tools/emoji-cheat-sheet/) - Used to copy the emoji into my code.
 
 - Program Used:
     - SNIPPING TOOL - Used for screenshot and snipping.
@@ -168,11 +168,11 @@ Expense Category Selection:
 
 ### Bugs
  
-- Unfixed Bugs. 
+#### Unfixed Bugs. 
     - No unfixed Bugs
 
-- Fixed Bugs
-    - Currently, there are no unresolved bugs in the project. However, during my work on the project, I encountered an issue with the "View Monthly Budget Status" function. It was not working properly and I found out that in order for it to work, I had to run the "View Total Amount Spent This Month" function first. To resolve this issue, I had to add some global variables to the code.
+#### Fixed Bugs
+    - Currently, there are no unresolved bugs in the project. However, while working on the project, I encountered an issue with the "View Monthly Budget Status" function, which was not functioning properly. After some investigation, I discovered that it required the "View Total Amount Spent This Month" function to be run first. In order to fix this, I added some global variables to the code, which now allows the "View Monthly Budget Status" function to be used in any order the user prefers. Once the budget is added, the function will display the correct value.
 
 ### Code Validation
 
@@ -182,7 +182,7 @@ Expense Category Selection:
 
 ### Compatibility
 
-- Browser Compatibility. The pythone app has been tested on the following browsers:
+- Browser Compatibility. The python app has been tested on the following browsers:
 
 |Name of the Browser|Compatible ✓ / Incompatible ✕ |
 |--|--|
@@ -191,15 +191,14 @@ Expense Category Selection:
 
 ### Manual Testing
 
-Manual Testing
 
 | What Has Been Check | The Outcome  | Image With Check| Pass/Fail |
 |--|--|--|--|
-|Main Meniu| Check if can submit different caracters which are not in meniu|![check the meniu of main screen](assets/images/meniucheck.png)|✓ |
+|Main Menu| Check if can submit different caracters which are not in meniu and if loop is working|![check the meniu of main screen](assets/images/meniucheck.png)|✓ |
 |Add Expense: Name|Check if the form can be submitted with empty fields and with a combination of letters and numbers.|![add expense name](assets/images/expensename.png)|✓ |
 |Add Expense: Amount|Check if the form can be submitted with empty fields and a combination of letters and numbers.|![add expense name](assets/images/expenseamount.png)|✓ |
-|Add Expense: Category|Check if the form can be submitted with empty fields and selecting a non-listed number.|![add expense category](assets/images/expensecategory.png)|✓ |
-|View Expenses by Category|Check if the form can be submitted with empty fields and choosing a different number nonlisted and if the loop is working. |![view expenses by category](assets/images/expenseviewcategory.png)|✓ |
+|Add Expense: Category|Check if the form can be submitted with empty fields and selecting a no listed number.|![add expense category](assets/images/expensecategory.png)|✓ |
+|View Expenses by Category|Check if the form can be submitted with empty fields and choosing a different number no listed and if the loop is working. |![view expenses by category](assets/images/expenseviewcategory.png)|✓ |
 |Calculate Total Expenses By Category| Check if can view expense categories with their respective total amounts, but only for categories with associated expenses.|![total expenses by category](assets/images/totalexpenses.png)|✓ |
 |View Total Amount Spent This Month| Check if can view the total expense amount.|![total expenses this month](assets/images/totalmonthlyspent.png)|✓ |
 |Set Up Monthly Budget| Check if the form can be submitted with empty fields or with letters. |![set monthly budget](assets/images/setbudget.png)|✓ |
@@ -210,11 +209,11 @@ Manual Testing
 ## Deployment
 
 - This app was created using Codeanywhere and then used the git push command to commit and push it to GitHub. The app has been deployed by using Heroku.
-- I used the folowing steps: 
+- The following steps was used for deployment: 
     1: Add the requirements.txt file and run: pip3 freeze > requirements.txt in the console.
     2: Commit the changes and push it to GitHub.
     3: Access Heroku website.
-    4: Log In and click on dashbord.
+    4: Log In and click on "Dashboard".
     5: Click on "New" and select "Create a new app".
     6: Give the app a name, select the region and click on "Create app".
     7: Go to "Settings" and click on "Config Vars".
@@ -234,12 +233,12 @@ Manual Testing
 Media:
 
 - [ASCII ART](https://www.asciiart.eu/text-to-ascii-art) - Used to generate the title of the app "Expense Tracker".
-- [WEBFX](https://www.webfx.com/tools/emoji-cheat-sheet/) - Used to copy the emojy into my code.
+- [WEBFX](https://www.webfx.com/tools/emoji-cheat-sheet/) - Used to copy the emoji into my code.
 
 Code: 
-- The inspiration was from [this youtube link](https://www.youtube.com/watch?v=HTD86h69PtE&t=2s)
-- [STACKOVERFLOW](https://stackoverflow.com/) - used to gain a better understanding of the code I was implementing.
-- [W3SCHOOLS](https://www.w3schools.com/python/) - used to find new Python functions and get some inspiration.
+- The inspiration was from [this YouTube link](https://www.youtube.com/watch?v=HTD86h69PtE&t=2s)
+- [STACKOVERFLOW](https://stackoverflow.com/) - Used to gain a better understanding of the code I was implementing.
+- [W3SCHOOLS](https://www.w3schools.com/python/) - Used to find new Python functions and get some inspiration.
 - Code Institute team for bits of advice.
 
 ## Acknowledgments
